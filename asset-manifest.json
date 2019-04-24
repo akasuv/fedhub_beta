@@ -1,5 +1,5 @@
 {
-  "main.css": "/fedhub_beta/static/css/main.cf01676c.chunk.css",
+  "main.css": "/fedhub_beta/static/css/main.977074b2.chunk.css",
   "main.js": "/fedhub_beta/static/js/main.cabe1a2c.chunk.js",
   "main.js.map": "/fedhub_beta/static/js/main.cabe1a2c.chunk.js.map",
   "runtime~main.js": "/fedhub_beta/static/js/runtime~main.f31351da.js",
@@ -7,7 +7,7 @@
   "static/js/2.95d53e36.chunk.js": "/fedhub_beta/static/js/2.95d53e36.chunk.js",
   "static/js/2.95d53e36.chunk.js.map": "/fedhub_beta/static/js/2.95d53e36.chunk.js.map",
   "index.html": "/fedhub_beta/index.html",
-  "precache-manifest.418a740b2054a36c909f575c0e54484d.js": "/fedhub_beta/precache-manifest.418a740b2054a36c909f575c0e54484d.js",
+  "precache-manifest.4ce0b76134b3364b4654c4f5384c4838.js": "/fedhub_beta/precache-manifest.4ce0b76134b3364b4654c4f5384c4838.js",
   "service-worker.js": "/fedhub_beta/service-worker.js",
-  "static/css/main.cf01676c.chunk.css.map": "/fedhub_beta/static/css/main.cf01676c.chunk.css.map"
+  "static/css/main.977074b2.chunk.css.map": "/fedhub_beta/static/css/main.977074b2.chunk.css.map"
 }
