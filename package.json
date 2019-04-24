@@ -2,7 +2,7 @@
   "name": "fedhub",
   "version": "0.1.0",
   "private": true,
-  "homepage":  "http://wwsu97.github.io/fedhub_beta",
+  "homepage": "http://wwsu97.github.io/fedhub_beta",
   "dependencies": {
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
@@ -24,5 +24,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "gh-pages": "^2.0.1"
+  }
 }
