@@ -246,6 +246,7 @@ main .resource-content .content-kind .content .article-kind figure {
   width: 100%;
   min-height: 188px;
   display: flex;
+  justify-content: center;
   align-items:center; 
   border: 0px solid green;
 }
