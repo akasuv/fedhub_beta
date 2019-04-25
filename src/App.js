@@ -17,6 +17,7 @@ export default class App extends Component {
       // searchValue: null,
       menuClick: false,
       rotateDeg: 0,
+      menuSlideDown: -200,
       searchValue: "",
       focusedStyle: {
         videos: { border: "3px solid black" },
@@ -127,11 +128,14 @@ export default class App extends Component {
   rotateMenuIcon = () => {
     MenuIconClickCount++;
     var degChange = 0;
+    var slide = 0;
     MenuIconClickCount % 2 !== 0 ? (degChange = 90) : (degChange = -90);
+    MenuIconClickCount % 2 !== 0 ? (slide = -5) : (slide = -200);
     this.setState(preState => {
       return {
         menuClick: !preState.menuClick,
-        rotateDeg: preState.rotateDeg + degChange
+        rotateDeg: preState.rotateDeg + degChange,
+        menuSlideDown: slide,
       };
     });
   };
@@ -139,8 +143,10 @@ export default class App extends Component {
   mouseLeave = () => {
     MenuIconClickCount % 2 !== 0 && MenuIconClickCount++;
     var degChange = 0;
+    var slide = 0;
+    MenuIconClickCount % 2 !== 0 ? (slide = -5) : (slide = -200);
     MenuIconClickCount % 2 === 0 ? (degChange = 0) : (degChange = -90);
-    this.setState({ menuClick: false, rotateDeg: degChange });
+    this.setState({ menuClick: false, rotateDeg: degChange,  menuSlideDown: slide, });
   };
 
   onSearch = e => {
@@ -260,6 +266,7 @@ export default class App extends Component {
           searchSubmit={this.searchSubmit}
           topicChoose={this.smallestScreenTopicChoose}
           backToHome={this.backToHome}
+          menuSlideDown={this.state.menuSlideDown}
         />
         <ResourceKinds
           // onClick={this.onClick}

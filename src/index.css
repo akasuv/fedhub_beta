@@ -114,6 +114,7 @@ header #smallest-screen-menu {
   visibility: hidden;
   transition: 1s;
   cursor: pointer;
+  z-index: 9999;
 }
 /* -----smallest screen tech options style----- */
 
@@ -121,19 +122,26 @@ header #smallest-screen {
   border: 0px solid red;
   position: absolute;
   width: 100%;
-  /* height: 300px; */
   /* right: 0; */
-  top: 190px;
+  top: 60px;
   display: flex;
   justify-content: flex-end;
   text-align: center;
+  /* overflow: hidden; */
 }
 header #smallest-screen #tech-kind {
   width: 100%;
+  height: 170px;
   /* position: absolute; */
   /* top: 210px; */ 
+  /* position: relative; */
+  /* top: -20px; */
+  overflow: hidden;
+  border: 0px solid red;
+  
 }
 header #smallest-screen #tech-kind ul {
+  position: relative;
   padding: 3px;
   width: 100%;
   background-color: white;
@@ -141,6 +149,8 @@ header #smallest-screen #tech-kind ul {
   -webkit-box-shadow: 0px 8px 100px 0px rgba(145,145,145,0.43);
   -moz-box-shadow: 0px 8px 100px 0px rgba(145,145,145,0.43);
   box-shadow: 0px 8px 100px 0px rgba(145,145,145,0.43);
+  /* top: -200px; */
+  transition: 0.5s;
 }
 header #smallest-screen #tech-kind ul li {
   margin: 3px;
@@ -184,7 +194,6 @@ main .resource-content .content-kind .content .vba  {
   justify-self: center;
   width: 300px;
   height: 230px;
-  border: 0px solid black;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -207,6 +216,7 @@ main .resource-content .content-kind .content .vba .resource-link {
   height: 100%;
   border: 0px solid red;
 }
+
 main .resource-content .content-kind .content .vba img {
   width: 90%;
   border: 0px solid green;
@@ -237,9 +247,7 @@ main .resource-content .content-kind .content .article-kind {
   padding: 3px;
   margin-bottom: 10px;
   /* border-radius: 10px; */
-  /* -webkit-box-shadow: 0px 3px 15px 0px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 3px 15px 0px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 3px 15px 0px rgba(0, 0, 0, 0.5); */
+  /* box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.5); */
   /* transition: 1s; */
 }
 main .resource-content .content-kind .content .article-kind figure {

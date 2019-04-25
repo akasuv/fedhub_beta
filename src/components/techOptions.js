@@ -4,7 +4,7 @@ import Button from './theButton';
 export default function TechOptions(props) {
   return(
     <div id="tech-kind">
-        <ul>
+        <ul style={{top: `${props.menuSlideDown}px`}}>
           <li>
             <Button onClick={props.topicChoose} value= "Html" children="HTML&CSS" />
           </li>

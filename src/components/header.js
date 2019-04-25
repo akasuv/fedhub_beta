@@ -70,7 +70,7 @@ export default function Header(props) {
     <header onMouseLeave={props.mouseLeave}>
     <h1 onClick={props.backToHome}>FEDHUB</h1>
     <img id="smallest-screen-menu" alt="menu" src={menu} style={{transform: `rotate(${props.rotateDeg}deg)`}} onClick={props.rotateMenuIcon} />
-    {props.menuClick && <div id="smallest-screen"><TechOptions topicChoose={props.topicChoose}/></div>}
+      <div id="smallest-screen"><TechOptions menuSlideDown={props.menuSlideDown} topicChoose={props.topicChoose}/></div>
     <TechOptions topicChoose={props.topicChoose} />
     <SearchBar 
       value={props.searchValue} 
