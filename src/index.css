@@ -123,7 +123,7 @@ header #smallest-screen {
   position: absolute;
   width: 100%;
   /* right: 0; */
-  top: 60px;
+  /* top: 60px; */
   display: flex;
   justify-content: flex-end;
   text-align: center;
@@ -146,9 +146,8 @@ header #smallest-screen #tech-kind ul {
   width: 100%;
   background-color: white;
   flex-direction: column;
-  -webkit-box-shadow: 0px 8px 100px 0px rgba(145,145,145,0.43);
-  -moz-box-shadow: 0px 8px 100px 0px rgba(145,145,145,0.43);
-  box-shadow: 0px 8px 100px 0px rgba(145,145,145,0.43);
+  box-shadow: 0px 1px 3px 0px rgba(145,145,145,0.43);
+  
   /* top: -200px; */
   transition: 0.5s;
 }

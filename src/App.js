@@ -18,6 +18,7 @@ export default class App extends Component {
       menuClick: false,
       rotateDeg: 0,
       menuSlideDown: -200,
+      menuMove: -999,
       searchValue: "",
       focusedStyle: {
         videos: { border: "3px solid black" },
@@ -129,13 +130,16 @@ export default class App extends Component {
     MenuIconClickCount++;
     var degChange = 0;
     var slide = 0;
+    var move = 0;
     MenuIconClickCount % 2 !== 0 ? (degChange = 90) : (degChange = -90);
     MenuIconClickCount % 2 !== 0 ? (slide = -5) : (slide = -200);
+    MenuIconClickCount % 2 !== 0 ? (move = 60) : (move = -999);
     this.setState(preState => {
       return {
         menuClick: !preState.menuClick,
         rotateDeg: preState.rotateDeg + degChange,
         menuSlideDown: slide,
+        menuMove: move
       };
     });
   };
@@ -144,9 +148,16 @@ export default class App extends Component {
     MenuIconClickCount % 2 !== 0 && MenuIconClickCount++;
     var degChange = 0;
     var slide = 0;
+    var move = 0;
     MenuIconClickCount % 2 !== 0 ? (slide = -5) : (slide = -200);
     MenuIconClickCount % 2 === 0 ? (degChange = 0) : (degChange = -90);
-    this.setState({ menuClick: false, rotateDeg: degChange,  menuSlideDown: slide, });
+    MenuIconClickCount % 2 !== 0 ? (move = 60) : (move = -999);
+    this.setState({
+      menuClick: false,
+      rotateDeg: degChange,
+      menuSlideDown: slide,
+      menuMove: move,
+    });
   };
 
   onSearch = e => {
@@ -267,6 +278,7 @@ export default class App extends Component {
           topicChoose={this.smallestScreenTopicChoose}
           backToHome={this.backToHome}
           menuSlideDown={this.state.menuSlideDown}
+          menuMove={this.state.menuMove}
         />
         <ResourceKinds
           // onClick={this.onClick}
