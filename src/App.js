@@ -15,7 +15,8 @@ export default class App extends Component {
       // searchValue: null,
       menuClick: false,
       rotateDeg: 0,
-      searchValue: ""
+      searchValue: "",
+      showFoucsed: {},
     };
   }
 
@@ -54,6 +55,7 @@ export default class App extends Component {
       default:
         break;
     }
+    this.mouseLeave();
   };
 
   rotateMenuIcon = () => {
@@ -121,6 +123,10 @@ export default class App extends Component {
   backToHome = () => {
     this.setState({ resourceKinds: resourceData.resourceDefault });
   };
+  contentChoose = e => {
+    console.log(e.target.value);
+    this.setState({showFoucsed: {color: "red"}})
+  }
   render() {
     console.log(this.state.resourceKinds);
     return (
@@ -143,6 +149,8 @@ export default class App extends Component {
           onSearch={this.onSearch}
           searchSubmit={this.searchSubmit}
           topicChoose={this.topicChoose}
+          contentChoose={this.contentChoose}
+          showFoucsed={this.state.showFoucsed}
         />
       </div>
     );

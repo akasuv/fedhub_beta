@@ -6,6 +6,8 @@ import BookKind from "./bookKind";
 import ArticleKind from "./articleKind";
 import SearchBar from "./searchBar";
 import TechOptions from "./techOptions";
+import ContentOptions from "./contentOptions";
+
 
 export default function ResourceKinds(props) {
   return (
@@ -16,6 +18,7 @@ export default function ResourceKinds(props) {
       onSubmit={props.searchSubmit}  
       />
       <TechOptions topicChoose={props.topicChoose}/>
+      <ContentOptions contentChoose={props.contentChoose} showFoucesd={props.showFoucesd}/>
       <div className="resource-content">
         <VideoKind videoKind={props.resourceKinds.videoKind} />
         <ArticleKind articleKind={props.resourceKinds.articleKind} />

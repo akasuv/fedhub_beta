@@ -332,6 +332,23 @@ main #tech-kind {
   justify-content: center;
   visibility: hidden;
 }
+main #content-options {
+  width: 80%;
+  /* border: 3px solid black; */
+  display: flex;
+  justify-content: space-evenly;
+  list-style-type: none;
+  left: 10%;
+  top: 90px;
+  position: absolute;
+}
+main #content-options li button {
+font-size: 1em;
+border: 0px solid grey;
+width: 80px;
+height: 25px;
+}
+
 @media (max-width: 599px) {
   header h1 {
     margin: auto;
@@ -352,7 +369,11 @@ main #tech-kind {
     border: 0px solid red;
   }
   main .resource-content .content-kind {
-    top: 20px;
+    top: 40px;
+  }
+  main .resource-content .kind-title {
+    visibility: hidden;
+    position: absolute;
   }
   main .resource-content .content-kind .content {
     grid-template-columns: 1fr; 
