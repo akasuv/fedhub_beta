@@ -341,12 +341,20 @@ main #content-options {
   left: 10%;
   top: 90px;
   position: absolute;
+  visibility: hidden;
+}
+main #content-options li {
+
 }
 main #content-options li button {
 font-size: 1em;
 border: 0px solid grey;
 width: 80px;
 height: 25px;
+outline: none;
+cursor: pointer;
+border-radius: 50px;
+background-color: white;
 }
 
 @media (max-width: 599px) {
@@ -368,6 +376,9 @@ height: 25px;
     top: 40px;
     border: 0px solid red;
   }
+  main #content-options {
+    visibility: visible;
+  }
   main .resource-content .content-kind {
     top: 40px;
   }
@@ -377,6 +388,7 @@ height: 25px;
   }
   main .resource-content .content-kind .content {
     grid-template-columns: 1fr; 
+    position: relative;
   }
   main .resource-content .content-kind .content-book {
     grid-template-columns: repeat(2, 1fr);
@@ -385,7 +397,7 @@ height: 25px;
     width: 350px;
     height: 250px;
   }
-  
+  main .resource-content .content-kind .content .video-kind {}
   main .resource-content .content-kind .content .article-kind {
     width: 350px;
     height: 280px;
@@ -404,7 +416,9 @@ height: 25px;
     min-height: 0px;
     max-height: 41px;
   }
-
+  main .resource-content .content-kind .content .no-related {
+    visibility: hidden;
+  }
   main .search-bar {
     visibility: visible;
     position: relative;

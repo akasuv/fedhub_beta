@@ -8,21 +8,32 @@ import SearchBar from "./searchBar";
 import TechOptions from "./techOptions";
 import ContentOptions from "./contentOptions";
 
-
 export default function ResourceKinds(props) {
   return (
     <main>
-      <SearchBar 
-      value={props.searchValue} 
-      onSearch={props.onSearch}
-      onSubmit={props.searchSubmit}  
+      <SearchBar
+        value={props.searchValue}
+        onSearch={props.onSearch}
+        onSubmit={props.searchSubmit}
       />
-      <TechOptions topicChoose={props.topicChoose}/>
-      <ContentOptions contentChoose={props.contentChoose} showFoucesd={props.showFoucesd}/>
+      <TechOptions topicChoose={props.topicChoose} />
+      <ContentOptions
+        contentChoose={props.contentChoose}
+        focusedStyle={props.focusedStyle}
+      />
       <div className="resource-content">
-        <VideoKind videoKind={props.resourceKinds.videoKind} />
-        <ArticleKind articleKind={props.resourceKinds.articleKind} />
-        <BookKind bookKind={props.resourceKinds.bookKind} />
+        <VideoKind
+          videoKind={props.resourceKinds.videoKind}
+          // contentStyle={props.contentStyle.videos}
+        />
+        <ArticleKind
+          articleKind={props.resourceKinds.articleKind}
+          // contentStyle={props.contentStyle.articles}
+        />
+        <BookKind
+          bookKind={props.resourceKinds.bookKind}
+          // contentStyle={props.contentStyle.books}
+        />
       </div>
     </main>
   );
