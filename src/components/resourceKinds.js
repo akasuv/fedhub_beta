@@ -21,23 +21,29 @@ export default function ResourceKinds(props) {
         focusedStyle={props.focusedStyle}
       />
       <div className="resource-content">
-       {props.resourceKinds.videoKind.length ? <VideoKind
-          videoKind={props.resourceKinds.videoKind}
-          // contentStyle={props.contentStyle.videos}
-        /> : null 
-        }
-         {props.resourceKinds.articleKind.length ?<ArticleKind
-          articleKind={props.resourceKinds.articleKind}
-          // contentStyle={props.contentStyle.articles}
-        /> :null}
-       {props.resourceKinds.bookKind.length ? <BookKind
-          bookKind={props.resourceKinds.bookKind}
-          // contentStyle={props.contentStyle.books}
-        />:null}
-        {(!props.resourceKinds.videoKind.length 
-          && !props.resourceKinds.articleKind.length
-          && !props.resourceKinds.bookKind.length) && <p className="no-results">No results</p>
-        }
+        {props.resourceKinds.videoKind.length ? (
+          <VideoKind
+            videoKind={props.resourceKinds.videoKind}
+            // contentStyle={props.contentStyle.videos}
+          />
+        ) : null}
+        {props.resourceKinds.articleKind.length ? (
+          <ArticleKind
+            articleKind={props.resourceKinds.articleKind}
+            // contentStyle={props.contentStyle.articles}
+          />
+        ) : null}
+        {props.resourceKinds.bookKind.length ? (
+          <BookKind
+            bookKind={props.resourceKinds.bookKind}
+            // contentStyle={props.contentStyle.books}
+          />
+        ) : null}
+        {!props.resourceKinds.videoKind.length &&
+          !props.resourceKinds.articleKind.length &&
+          !props.resourceKinds.bookKind.length && (
+            <p className="no-results">No results</p>
+          )}
       </div>
     </main>
   );
