@@ -6,7 +6,7 @@ export default function VideoKind(props) {
       <p className="kind-title">Videos</p>
       <div className="content">
         {props.videoKind.length 
-          ? (props.videoKind.map((item, index) => {
+          && (props.videoKind.map((item, index) => {
               return (
                 <div
                   className="vba video-kind"
@@ -25,11 +25,7 @@ export default function VideoKind(props) {
                 </div>
               );
             })) 
-          : (
-            <p className="no-related" style={{ color: "grey" }}>
-              No related videos
-            </p>
-          )
+          
         }
       </div>
     </div>

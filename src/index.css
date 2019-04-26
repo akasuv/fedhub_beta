@@ -183,7 +183,11 @@ main .resource-content {
   padding-bottom: 10px;
   border: 0px solid green;
 }
-
+main .resource-content .no-results {
+  font-size: 23px;
+  text-align: center;
+  margin-top: 200px;
+}
 main .resource-content .content-kind {
   padding: 10px;
   position: relative;
@@ -271,7 +275,11 @@ main .resource-content .content-kind .content .article-kind figure {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 0px solid green;
+  /* border: 1px solid grey; */
+}
+
+main .resource-content .content-kind .content .article-kind figure img {
+  border: 1px solid #D1D5D8;
 }
 
 main .resource-content .content-kind .content .article-kind .from {
@@ -363,10 +371,9 @@ main #tech-kind {
 
 main #content-options {
   width: 80%;
-  /* border: 3px solid black; */
   position: absolute;
   left: 10%;
-  top: 90px;
+  top: 110px;
   display: flex;
   justify-content: space-evenly;
   list-style-type: none;
@@ -415,7 +422,7 @@ main #content-options li button {
   }
 
   main .resource-content .content-kind {
-    top: 40px;
+    top: 80px;
   }
 
   main .resource-content .kind-title {

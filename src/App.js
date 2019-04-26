@@ -4,6 +4,7 @@ import React, { Component } from "react";
 import Header from "./components/header";
 import ResourceKinds from "./components/resourceKinds";
 import resourceData from "./resourceData";
+import resourceDataDefault from "./resourceDataDefault";
 import { deflate } from "zlib";
 
 var MenuIconClickCount = 0;
@@ -12,8 +13,9 @@ export default class App extends Component {
   constructor() {
     super();
     this.state = {
-      resourceKinds: resourceData.resourceDefault,
-      contentKeeper: resourceData.resourceDefault,
+      resourceKinds: resourceDataDefault.resourceDefault,
+      contentKeeper: resourceDataDefault.resourceDefault,
+      mobileMode: false,
       // searchValue: null,
       menuClick: false,
       rotateDeg: 0,
@@ -29,10 +31,10 @@ export default class App extends Component {
   }
 
   // Change the conten data from the choice
-  topicChoose = e => {
+  largeScreenTopicChoose = e => {
     switch (e.target.value) {
-      // When users click the HTML&CSS button, 
-      // the content will be assigned with 
+      // When users click the HTML&CSS button,
+      // the content will be assigned with
       // html data in the resourceData Object.
       case "Html":
         this.setState({
@@ -92,8 +94,8 @@ export default class App extends Component {
   // When the screen becomes smaller like a phone screen,
   // Change the contents that will be shown in default.
   smallestScreenTopicChoose = e => {
-    // this.topicChoose(e);
-    
+    this.largeScreenTopicChoose(e);
+
     // Keep the button focused style on the video button as default
     this.setState({
       focusedStyle: Object.assign(
@@ -105,7 +107,6 @@ export default class App extends Component {
     });
 
     switch (e.target.value) {
-
       // When users choose a topic, such as the HTML topic,
       // the page will show the video related to html as default.
       case "Html":
@@ -143,6 +144,13 @@ export default class App extends Component {
     }
   };
 
+  topicChoose = e => {
+    window.innerWidth > 599
+      ? this.largeScreenTopicChoose(e)
+      : this.smallestScreenTopicChoose(e);
+      this.setState({searchValue: ""});
+  };
+
   // When the menu is clicked, the menu icon will rotate
   rotateMenuIcon = () => {
     MenuIconClickCount++;
@@ -150,21 +158,15 @@ export default class App extends Component {
     var slide = 0;
     var move = 0;
 
-    // If the click time is odd, 
+    // If the click time is odd,
     // the icon will rotate 90 degrees, the menu will slide down
-    // and if the click time is even, the icon will back to 
+    // and if the click time is even, the icon will back to
     // the default position, the menu will slide up.
-    MenuIconClickCount % 2 !== 0 
-      ? (degChange = 90) 
-      : (degChange = -90);
-    MenuIconClickCount % 2 !== 0 
-      ? (slide = -5) 
-      : (slide = -200);
+    MenuIconClickCount % 2 !== 0 ? (degChange = 90) : (degChange = -90);
+    MenuIconClickCount % 2 !== 0 ? (slide = -5) : (slide = -200);
 
     //TODO: The menu position covers the content choosing button.
-    MenuIconClickCount % 2 !== 0 
-      ? (move = 60) 
-      : (move = -999);
+    MenuIconClickCount % 2 !== 0 ? (move = 60) : (move = -999);
 
     this.setState(preState => {
       return {
@@ -176,35 +178,26 @@ export default class App extends Component {
     });
   };
 
-  // When the mouse leaved, 
+  // When the mouse leaved,
   // it should have an same effect to the menu like the even click time.
   mouseLeave = () => {
-
-    // if the menu click time is odd, 
-    // and the user leaved, the click time should add one, 
+    // if the menu click time is odd,
+    // and the user leaved, the click time should add one,
     // so it will be like an even time click.
     MenuIconClickCount % 2 !== 0 && MenuIconClickCount++;
     var degChange = 0;
     var slide = 0;
     var move = 0;
-    MenuIconClickCount % 2 !== 0 
-      ? (slide = -5) 
-      : (slide = -200);
-    MenuIconClickCount % 2 === 0 
-      ? (degChange = 0)
-      : (degChange = -90);
-    MenuIconClickCount % 2 !== 0 
-      ? (move = 60) 
-      : (move = -999);
+    MenuIconClickCount % 2 !== 0 ? (slide = -5) : (slide = -200);
+    MenuIconClickCount % 2 === 0 ? (degChange = 0) : (degChange = -90);
+    MenuIconClickCount % 2 !== 0 ? (move = 60) : (move = -999);
 
-    this.setState(
-      {
-        menuClick: false,
-        rotateDeg: degChange,
-        menuSlideDown: slide,
-        menuMove: move,
-      }
-    );
+    this.setState({
+      menuClick: false,
+      rotateDeg: degChange,
+      menuSlideDown: slide,
+      menuMove: move
+    });
   };
 
   onSearch = e => {
@@ -219,18 +212,18 @@ export default class App extends Component {
       videoKind: []
     };
 
-    // Check the search result is whether in the video kind of whole resource data 
+    // Check the search result is whether in the video kind of whole resource data
     for (let key in resourceData) {
       searchResult.videoKind = [
         ...resourceData[key].videoKind.filter(item =>
-          item.resourceName.toLowerCase().includes(
-            this.state.searchValue.toLowerCase()
-          )
+          item.resourceName
+            .toLowerCase()
+            .includes(this.state.searchValue.toLowerCase())
         ),
         // Using the spread operator to keep the result from being covered.
         // The result should be all the data matching the search,
         // instead of the last one.
-        ...searchResult.videoKind  
+        ...searchResult.videoKind
       ];
     }
 
@@ -256,10 +249,12 @@ export default class App extends Component {
         ),
         ...searchResult.bookKind
       ];
+
+      // FIXME: search results aren't separated.
     }
-    
+
     // Show the search result.
-    this.setState({ resourceKinds: searchResult });
+    this.setState({ resourceKinds: searchResult, contentKeeper: searchResult });
 
     //TODO: Learning more about this.
     e.preventDefault();
@@ -267,17 +262,36 @@ export default class App extends Component {
 
   // When the web icon is clicked, change the content back to default.
   backToHome = () => {
-    this.setState({ resourceKinds: resourceData.resourceDefault });
+    window.innerWidth < 600
+      ? this.setState({
+          resourceKinds: Object.assign(
+            {},
+            resourceDataDefault.resourceDefault,
+            { articleKind: [] },
+            { bookKind: [] }
+          ),
+          contentKeeper: resourceDataDefault.resourceDefault,
+          focusedStyle: Object.assign(
+            {},
+            { videos: { border: "3px solid black" } },
+            { articles: { border: "none" } },
+            { books: { border: "none" } }
+          ),
+        }
+        )
+      : this.setState({ resourceKinds: resourceDataDefault.resourceDefault });
+    this.setState({searchValue: ""});
   };
 
+  backToHomeDataChange = () => {
+    
+  }
   // When users choose different content kinds,
   // videos, articles, books,
   // Show the related contents.
   contentChoose = e => {
-
     switch (e.target.value) {
-
-      // When the video button is choosen, 
+      // When the video button is choosen,
       case "videos":
         // Only show the video content
         // FIXME: The other two kinds of data will become null,
@@ -290,7 +304,7 @@ export default class App extends Component {
             { bookKind: [] }
           ),
           //give the video button a black border,
-          // so the user will know 
+          // so the user will know
           //what kind of contents that he/she has choosed.
           focusedStyle: Object.assign(
             {},
@@ -338,6 +352,27 @@ export default class App extends Component {
 
     // change contents depending on the button
   };
+
+  componentDidMount() {
+    window.addEventListener("resize", this.resize.bind(this));
+    this.resize();
+  }
+
+  componentDidUpdate() {
+  }
+  // When the window is resized to small,
+  // the content will be separated into three parts,
+  // two of them is empty, so if you resize it back,
+  // the page will show the two is empty.
+  // To fix that, I need detect the resize action,
+  // when it's resized back,
+  // the data will be reset using the contentKeeper.
+  resize() {
+    window.innerWidth > 599
+      ? this.setState({ resourceKinds: this.state.contentKeeper })
+      : this.contentChoose({ target: { value: "videos" } });
+  }
+
   render() {
     console.log(this.state.resourceKinds.videoKind);
     return (
@@ -350,7 +385,7 @@ export default class App extends Component {
           searchValue={this.state.searchValue}
           onSearch={this.onSearch}
           searchSubmit={this.searchSubmit}
-          topicChoose={this.smallestScreenTopicChoose}
+          topicChoose={this.topicChoose}
           backToHome={this.backToHome}
           menuSlideDown={this.state.menuSlideDown}
           menuMove={this.state.menuMove}
