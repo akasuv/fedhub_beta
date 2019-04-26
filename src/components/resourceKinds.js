@@ -1,5 +1,4 @@
 import React from "react";
-// import ReactDOM from "react-dom";
 
 import VideoKind from "./videoKind";
 import BookKind from "./bookKind";
