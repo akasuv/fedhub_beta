@@ -9,7 +9,7 @@ Tech Stacks
 Features
 
 * Responsive
-* Search (Implementing this successfully makes me feel like I've created a Google🤣 , although it's very simple for most of you guys.)
+* Search (Implementing this successfully made me feel like I created a Google🤣 , although it's may very easy for most of you guys, but it's my first time!!!)
 * no more☹️ (What have I done for these hard-working days?🤯)
 
 ### How did I layout the page
