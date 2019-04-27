@@ -17,11 +17,14 @@ export default function VideoKind(props) {
                     href={item.resourceUrl}
                     className="resource-link"
                     alt="resource-link"
-                  />
-                  <img src={item.imgSrc} alt="" />
+                  >
+                  <figure>
+                    <img src={item.imgSrc} alt="" />
+                  </figure>
                   <p className="resource-name">
                     {item.resourceName}
                   </p>
+                  </a>
                 </div>
               );
             })) 

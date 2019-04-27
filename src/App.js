@@ -8,7 +8,7 @@ import resourceDataDefault from "./resourceDataDefault";
 import { deflate } from "zlib";
 
 var MenuIconClickCount = 0;
-
+var resizeCount = 0;
 export default class App extends Component {
   constructor() {
     super();
@@ -30,7 +30,7 @@ export default class App extends Component {
     };
   }
 
-  // Change the conten data from the choice
+  // Change the content data from the choice
   largeScreenTopicChoose = e => {
     switch (e.target.value) {
       // When users click the HTML&CSS button,
@@ -290,6 +290,7 @@ export default class App extends Component {
   // videos, articles, books,
   // Show the related contents.
   contentChoose = e => {
+    console.log(e.target.value)
     switch (e.target.value) {
       // When the video button is choosen,
       case "videos":
@@ -357,7 +358,10 @@ export default class App extends Component {
     window.addEventListener("resize", this.resize.bind(this));
     this.resize();
   }
-
+  componentWillUnmount() {
+    // you need to unbind the same listener that was binded.
+    window.removeEventListener('resize', this.resize, false);
+}
   componentDidUpdate() {
   }
   // When the window is resized to small,
@@ -368,9 +372,18 @@ export default class App extends Component {
   // when it's resized back,
   // the data will be reset using the contentKeeper.
   resize() {
-    window.innerWidth > 599
-      ? this.setState({ resourceKinds: this.state.contentKeeper })
-      : this.contentChoose({ target: { value: "videos" } });
+    if (window.innerWidth > 599) {
+      this.setState({ resourceKinds: this.state.contentKeeper })
+      resizeCount = 0;
+    } else 
+    { 
+      // When the screen becomes small,
+      // only the first time of resizing 
+      // need to set video content choice as default.
+      resizeCount < 1 && this.contentChoose({ target: { value: "videos" } });
+      resizeCount++; 
+    }
+      // console.log(resizeCount)
   }
 
   render() {

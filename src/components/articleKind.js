@@ -19,7 +19,7 @@ export default function ArticleKind(props) {
                     href={item.resourceUrl}
                     className="resource-link"
                     alt="resource-link"
-                  />
+                  >
                   <figure>
                     <img src={item.imgSrc} alt="article" />
                   </figure>
@@ -27,6 +27,7 @@ export default function ArticleKind(props) {
                     {item.resourceName}
                   </p>
                   <p className="from">from Medium</p>
+                  </a>
                 </div>
                 );
               }
