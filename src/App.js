@@ -202,6 +202,7 @@ export default class App extends Component {
 
   onSearch = e => {
     this.setState({ searchValue: e.target.value });
+    // this.searchSubmit(e);
   };
 
   // TODO:  Check if there is a better solution to do the search.
@@ -254,8 +255,27 @@ export default class App extends Component {
     }
 
     // Show the search result.
-    this.setState({ resourceKinds: searchResult, contentKeeper: searchResult });
-
+    // this.setState({ resourceKinds: searchResult, contentKeeper: searchResult });
+    // TODO: need a function to reuse this.
+    window.innerWidth < 600
+      ? this.setState({
+      resourceKinds: Object.assign(
+        {},
+        searchResult,
+        { articleKind: [] },
+        { bookKind: [] }
+        ),
+        contentKeeper: searchResult,
+        focusedStyle: Object.assign(
+          {},
+          { videos: { border: "3px solid black" } },
+          { articles: { border: "none" } },
+          { books: { border: "none" } }
+          ),
+        }
+        )
+      : this.setState({resourceKinds: searchResult, contentKeeper: searchResult});
+    
     //TODO: Learning more about this.
     e.preventDefault();
   };
@@ -414,7 +434,7 @@ export default class App extends Component {
           focusedStyle={this.state.focusedStyle}
           // contentSyle={this.state.contentSyle}
         />
-      </div>
+    </div>
     );
   }
 }

@@ -27,7 +27,7 @@ export default function ContentOptions(props) {
           value="books"
           style={props.focusedStyle.books}
         >
-          books
+          Books
         </button>
       </li>
     </ul>

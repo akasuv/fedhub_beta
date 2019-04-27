@@ -7,7 +7,7 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
@@ -175,7 +175,6 @@ header #smallest-screen #tech-kind ul li {
 main {
   position: relative;
   top: 0px;
-  border: 0px solid red;
 }
 
 main .resource-content {
@@ -210,6 +209,10 @@ main .resource-content .content-kind .content {
   /* transform: scale(1); */
 }
 main .resource-content .content-kind .content .vba {
+  width: 95%;
+  margin: auto;
+  display: flex;
+  border: 0px solid red;
   justify-self: center;
 }
 main .resource-content .content-kind .content .resource-link {
@@ -245,7 +248,6 @@ main .resource-content .content-kind .content .resource-link figure {
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
   border: 0px solid green;
 }
 
@@ -256,7 +258,7 @@ main .resource-content .content-kind .content .resource-link img {
 
 main .resource-content .content-kind .content .resource-link .resource-name {
   width: 90%;
-  margin: 15px auto;
+  margin-bottom: 15px;
   min-height: 40px;
   max-height: 41px;
   line-height: 20px;
@@ -287,11 +289,6 @@ main .resource-content .content-kind .content .resource-link .resource-name {
 } */
 
 
-/* 
-main .resource-content .content-kind .content .article-kind .resource-link figure {
-  width: 300px;
-  border: 0px solid #D1D5D8;
-} */
 
 main .resource-content .content-kind .content .article-kind {
   padding: 5px 0px;
@@ -299,6 +296,12 @@ main .resource-content .content-kind .content .article-kind {
   border-radius: 5px;
   box-shadow: 0px 1px 5px 1px #D1D5D8;
 }
+
+main .resource-content .content-kind .content .article-kind .resource-link figure {
+  max-height: 170px;
+  overflow: hidden;
+}
+
 main .resource-content .content-kind .content .article-kind .resource-link figure img {
   border: 1px solid #D1D5D8;
 }
@@ -418,7 +421,7 @@ main #content-options li button {
 
 /* ----- Media query ----- */
 @media (max-width: 599px) {
-  
+
   header h1 {
     margin: auto;
   }
@@ -441,7 +444,12 @@ main #content-options li button {
     top: 40px;
     border: 0px solid red;
   }
-
+  main #tech-kind {
+    visibility: visible;
+    width: 0;
+    position: relative;
+    top: -999px;
+  }
   main #content-options {
     visibility: visible;
   }
@@ -463,15 +471,19 @@ main #content-options li button {
   main .resource-content .content-kind .content-book {
     grid-template-columns: repeat(2, 1fr);
   }
-
-  main .resource-content .content-kind .content .vba {
-    width: 100%;
-    height: 250px;
-  }
-
+  
   main .resource-content .content-kind .content .book-kind {
     box-sizing: border-box;
     width: 170px;
+  }
+  main .resource-content .content-kind .content .video-kind .resource-link {
+    width: 350px;
+    height: 250px;
+  }
+
+  main .resource-content .content-kind .content .article-kind {
+    width: 300px;
+    height: 280px;
   }
 
   main .resource-content .content-kind .content .book-kind img {
@@ -555,10 +567,6 @@ main #content-options li button {
 
 @media (min-width: 680px) and (max-width: 799px) {
 
-  main {
-    top: 80px;
-  }
-
   main .search-bar {
     visibility: visible;
   }
@@ -598,9 +606,9 @@ main #content-options li button {
     border: 0px solid red;
   }
 
-  main .resource-content .content-kind {
-    top: 20px;
-  }
+  /* main .resource-content .content-kind {
+    top: 0px;
+  } */
 
   main .resource-content .content-kind .content {
     grid-template-columns: repeat(2, 1fr);
