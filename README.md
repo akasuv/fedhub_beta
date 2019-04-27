@@ -83,7 +83,7 @@ There are three kinds for now:
 
 ### The Content
 
-The resource contents are linked with an outside link, like YouTube, Medium links.
+The resource contents are linked with outside links, like YouTube, Medium links.
 
 
 
