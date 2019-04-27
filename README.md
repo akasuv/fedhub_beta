@@ -50,7 +50,7 @@ For what I understand, 'Responsive' means when the window changed, the webpage w
 
   <img src="https://github.com/wwsu97/fedhub_beta/blob/master/docs/images/resp_4.gif" width=50%>
 
-  * it will show extra three button, and you know what they are for😌
+  * it will show extra three buttons, and you know what they are for😌
 
 ## The ➕➖➗✖️ Part
 
