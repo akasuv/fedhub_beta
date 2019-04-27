@@ -31,24 +31,24 @@ For what I understand, 'Responsive' means when the window changed, the webpage w
 
 * When the window becomes smaller, the topic nav will move down too, and the search box width will stretch to 100% of the window (same as the search box).
 
-  <img src="/Users/wei/Dev_SUV/Proj/FeProj/fedhub/docs/images/resp_2.gif" width=50%>
+  <img src="https://github.com/wwsu97/fedhub_beta/blob/master/docs/images/resp_2.gif" width=50%>
 
 * When it becomes smallerrrrr😆, the nav bar will pass away peacefully, and its son The Menu Icon will inherit his father's mission!🚀
 
-  <img src="/Users/wei/Dev_SUV/Proj/FeProj/fedhub/docs/images/resp_3.gif" width=50%>
+  <img src="https://github.com/wwsu97/fedhub_beta/blob/master/docs/images/resp_3.gif" width=50%>
 
   🤔How can the menu slide down?
 
   * set menu position as relative, give is a default position from top 0px
   * and when the menu is clicked, change it from top like 200px, and set a transition time like 1s.
 
-  🤩 The rotating menu icon?
+  🤩The rotating menu icon?
 
   * Same as menu, when it clicked, change the rotating degree.
 
 * When it becomes smaller for the last time, it will get into the "Mobile Mode"
 
-  <img src="/Users/wei/Dev_SUV/Proj/FeProj/fedhub/docs/images/resp_4.gif" width=50%>
+  <img src="https://github.com/wwsu97/fedhub_beta/blob/master/docs/images/resp_4.gif" width=50%>
 
   * it will show extra three button, and you know what them for😌
 
