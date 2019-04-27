@@ -1,13 +1,13 @@
 {
-  "main.css": "/fedhub_beta/static/css/main.da4b97c5.chunk.css",
-  "main.js": "/fedhub_beta/static/js/main.cddd51d3.chunk.js",
-  "main.js.map": "/fedhub_beta/static/js/main.cddd51d3.chunk.js.map",
+  "main.css": "/fedhub_beta/static/css/main.79a363a4.chunk.css",
+  "main.js": "/fedhub_beta/static/js/main.27aa216c.chunk.js",
+  "main.js.map": "/fedhub_beta/static/js/main.27aa216c.chunk.js.map",
   "runtime~main.js": "/fedhub_beta/static/js/runtime~main.f31351da.js",
   "runtime~main.js.map": "/fedhub_beta/static/js/runtime~main.f31351da.js.map",
   "static/js/2.310a0e74.chunk.js": "/fedhub_beta/static/js/2.310a0e74.chunk.js",
   "static/js/2.310a0e74.chunk.js.map": "/fedhub_beta/static/js/2.310a0e74.chunk.js.map",
   "index.html": "/fedhub_beta/index.html",
-  "precache-manifest.754408f15eca72a83268a53a46594c11.js": "/fedhub_beta/precache-manifest.754408f15eca72a83268a53a46594c11.js",
+  "precache-manifest.4bf2d3ef33ac3ada63ea09f3c53d2a58.js": "/fedhub_beta/precache-manifest.4bf2d3ef33ac3ada63ea09f3c53d2a58.js",
   "service-worker.js": "/fedhub_beta/service-worker.js",
-  "static/css/main.da4b97c5.chunk.css.map": "/fedhub_beta/static/css/main.da4b97c5.chunk.css.map"
+  "static/css/main.79a363a4.chunk.css.map": "/fedhub_beta/static/css/main.79a363a4.chunk.css.map"
 }

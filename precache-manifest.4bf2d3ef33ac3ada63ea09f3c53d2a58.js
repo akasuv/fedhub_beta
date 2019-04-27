@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "e371e10de53880ed2b0c",
-    "url": "/fedhub_beta/static/css/main.da4b97c5.chunk.css"
+    "revision": "adf18a38d8dcdfefc675",
+    "url": "/fedhub_beta/static/css/main.79a363a4.chunk.css"
   },
   {
-    "revision": "e371e10de53880ed2b0c",
-    "url": "/fedhub_beta/static/js/main.cddd51d3.chunk.js"
+    "revision": "adf18a38d8dcdfefc675",
+    "url": "/fedhub_beta/static/js/main.27aa216c.chunk.js"
   },
   {
     "revision": "1d9fd55b976dea637832",
@@ -16,7 +16,7 @@ self.__precacheManifest = [
     "url": "/fedhub_beta/static/js/2.310a0e74.chunk.js"
   },
   {
-    "revision": "a160a091d6e1d4dbf9468668156dec32",
+    "revision": "5244fee2b53ea3187c5047bdd695ec4e",
     "url": "/fedhub_beta/index.html"
   }
 ];
