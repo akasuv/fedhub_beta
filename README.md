@@ -12,7 +12,7 @@ Features
 * Search (Implementing this successfully makes me feel like I've created a Google🤣 , although it's very simple for most of you guys.)
 * no more☹️ (What have I done for these hard-working days?🤯)
 
-### How I layout the page
+### How did I layout the page
 
 For responsive effects, I used the most important css style is CSS Grid and Flex-box
 
