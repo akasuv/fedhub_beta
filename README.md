@@ -25,7 +25,7 @@ For what I understand, 'Responsive' means when the window changed, the webpage w
 
 * First, the search box will move down.
 
-  <img src="/Users/wei/Dev_SUV/Proj/FeProj/fedhub/docs/images/resp_1.gif" width=50%>
+  <img src="https://github.com/wwsu97/fedhub_beta/blob/master/docs/images/resp_1.gif" width=50%>
 
   🤔It seems like the search box moved down from the header, actually there are two search boxes, when the window become smaller, the search box on the header is hidden, and the second one showed up.
 
