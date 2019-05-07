@@ -5,6 +5,8 @@ import Header from "./components/header";
 import ResourceKinds from "./components/resourceKinds";
 import resourceData from "./resourceData";
 import resourceDataDefault from "./resourceDataDefault";
+import * as firebase from 'firebase';
+
 import { deflate } from "zlib";
 
 var MenuIconClickCount = 0;
@@ -14,8 +16,15 @@ export default class App extends Component {
   constructor() {
     super();
     this.state = {
+      sourceData: null,
       resourceKinds: resourceDataDefault.resourceDefault,
       contentKeeper: resourceDataDefault.resourceDefault,
+      resourceTest: {
+        videos: [],
+        articles: [],
+        books: [],
+      },
+      topicKeeper: "HomePage",
       mobileMode: false,
       // searchValue: null,
       menuClick: false,
@@ -29,64 +38,15 @@ export default class App extends Component {
         books: {}
       },
       headStyle: {
-      }
+      },
+      testData: [],
     };
   }
 
   // Change the content data from the choice
   largeScreenTopicChoose = e => {
-    switch (e.target.value) {
-      // When users click the HTML&CSS button,
-      // the content will be assigned with
-      // html data in the resourceData Object.
-      case "Html":
-        this.setState({
-          resourceKinds: resourceData.resourceHtml,
-          contentKeeper: resourceData.resourceHtml
-        });
-        break;
-      case "JavaScript":
-        this.setState({
-          resourceKinds: resourceData.resourceJavaScript,
-          contentKeeper: resourceData.resourceJavaScript
-        });
-        break;
-      case "React":
-        this.setState({
-          resourceKinds: resourceData.resourceReact,
-          contentKeeper: resourceData.resourceReact
-        });
-        break;
-      case "Vue":
-        this.setState({
-          resourceKinds: {
-            articleKind: [],
-            bookKind: [],
-            videoKind: []
-          }
-        });
-        break;
-      case "Angular":
-        this.setState({
-          resourceKinds: {
-            articleKind: [],
-            bookKind: [],
-            videoKind: []
-          }
-        });
-        break;
-      case "Bootstrap":
-        this.setState({
-          resourceKinds: {
-            articleKind: [],
-            bookKind: [],
-            videoKind: []
-          }
-        });
-        break;
-      default:
-        break;
-    }
+    this.dataLoad(e.target.value, this.state.sourceData);
+    this.setState({topicKeeper: e.target.value});
     // this.contentChoose({target:{value: "videos"}});
 
     // When the choosing action is down,
@@ -97,8 +57,8 @@ export default class App extends Component {
   // When the screen becomes smaller like a phone screen,
   // Change the contents that will be shown in default.
   smallestScreenTopicChoose = e => {
-    this.largeScreenTopicChoose(e);
-
+    this.dataLoad(e.target.value, this.state.sourceData, "videos");
+    this.setState({topicKeeper: e.target.value});
     // Keep the button focused style on the video button as default
     this.setState({
       focusedStyle: Object.assign(
@@ -108,43 +68,6 @@ export default class App extends Component {
         { books: { border: "none" } }
       )
     });
-
-    switch (e.target.value) {
-      // When users choose a topic, such as the HTML topic,
-      // the page will show the video related to html as default.
-      case "Html":
-        this.setState({
-          resourceKinds: Object.assign(
-            {},
-            resourceData.resourceHtml,
-            { articleKind: [] },
-            { bookKind: [] }
-          )
-        });
-        break;
-      case "JavaScript":
-        this.setState({
-          resourceKinds: Object.assign(
-            {},
-            resourceData.resourceJavaScript,
-            { articleKind: [] },
-            { bookKind: [] }
-          )
-        });
-        break;
-      case "React":
-        this.setState({
-          resourceKinds: Object.assign(
-            {},
-            resourceData.resourceReact,
-            { articleKind: [] },
-            { bookKind: [] }
-          )
-        });
-        break;
-      default:
-        break;
-    }
   };
 
   topicChoose = e => {
@@ -279,121 +202,73 @@ export default class App extends Component {
         )
       : this.setState({resourceKinds: searchResult, contentKeeper: searchResult});
     
-    //TODO: Learning more about this.
     e.preventDefault();
   };
 
-  // When the web icon is clicked, change the content back to default.
   backToHome = () => {
     window.innerWidth < 600
-      ? this.setState({
-          resourceKinds: Object.assign(
-            {},
-            resourceDataDefault.resourceDefault,
-            { articleKind: [] },
-            { bookKind: [] }
-          ),
-          contentKeeper: resourceDataDefault.resourceDefault,
-          focusedStyle: Object.assign(
-            {},
-            { videos: { border: "3px solid black" } },
-            { articles: { border: "none" } },
-            { books: { border: "none" } }
-          ),
-        }
-        )
-      : this.setState({ resourceKinds: resourceDataDefault.resourceDefault });
-    this.setState({searchValue: ""});
+    ? this.dataLoad('HomePage', this.state.sourceData, 'videos')
+    : this.dataLoad('HomePage', this.state.sourceData);
+    
+    this.setState({
+      topicKeeper: "HomePage",
+      searchValue: "",
+    });
   };
 
-  backToHomeDataChange = () => {
-    
-  }
-  // When users choose different content kinds,
-  // videos, articles, books,
-  // Show the related contents.
   contentChoose = e => {
-    // console.log(e.target.value)
-    switch (e.target.value) {
-      // When the video button is choosen,
-      case "videos":
-        // Only show the video content
-        // FIXME: The other two kinds of data will become null,
-        // it's ok on mobile phone, but have problems on pc.
-        this.setState({
-          resourceKinds: Object.assign(
-            {},
-            this.state.contentKeeper,
-            { articleKind: [] },
-            { bookKind: [] }
-          ),
-          //give the video button a black border,
-          // so the user will know
-          //what kind of contents that he/she has choosed.
-          focusedStyle: Object.assign(
-            {},
-            { videos: { border: "3px solid black" } },
-            { articles: { border: "none" } },
-            { books: { border: "none" } }
-          )
-        });
-        break;
-      case "articles":
-        this.setState({
-          resourceKinds: Object.assign(
-            {},
-            this.state.contentKeeper,
-            { videoKind: [] },
-            { bookKind: [] }
-          ),
-          focusedStyle: Object.assign(
-            {},
-            { videos: { border: "none" } },
-            { articles: { border: "3px solid black" } },
-            { books: { border: "none" } }
-          )
-        });
-        break;
-      case "books":
-        this.setState({
-          resourceKinds: Object.assign(
-            {},
-            this.state.contentKeeper,
-            { videoKind: [] },
-            { articleKind: [] }
-          ),
-          focusedStyle: Object.assign(
-            {},
-            { videos: { border: "none" } },
-            { articles: { border: "none" } },
-            { books: { border: "3px solid black" } }
-          )
-        });
-        break;
-      default:
-        break;
-    }
-
-    // change contents depending on the button
+    this.dataLoad(this.state.topicKeeper, this.state.sourceData, e.target.value);
   };
 
   componentDidMount() {
+    // connect to firebase database 
+    const rootRef = firebase.database().ref();
+    rootRef.on('value', snap => {
+      const data = snap.toJSON();
+      this.dataLoad('HomePage', data);
+      this.setState({sourceData: data});
+      this.resize(data);
+    })
+
     window.addEventListener("resize", this.resize.bind(this));
     window.addEventListener("scroll", this.scroll.bind(this));
     this.scroll();
-    this.resize();
+  }
+
+  dataLoad(topic, data, type) {
+    const resourceTest = {
+      videos: [],
+      articles: [],
+      books: [],
+    }
+
+    if(!type) {
+      for(let parentKey in resourceTest) {
+        for(let childKey in data[topic][parentKey]) {
+          resourceTest[parentKey].push(data[topic][parentKey][childKey]);
+        }
+      }
+    } else {
+      for(let key in data[topic][type]){
+        resourceTest[type].push(data[topic][type][key]);
+      }
+    } 
+
+    this.setState({resourceTest});
   }
 
   scroll() {
     let currentScroll = window.pageYOffset;
     if (prevScroll < currentScroll) {
-    this.setState({headStyle: {top: "-80px"}}) 
+      this.setState({headStyle: {top: "-80px"}})
+    }
+    else {
+      this.setState({headStyle: {top: "0px"}})
+    };
+    !(currentScroll < 0) && (prevScroll = currentScroll);
+    this.mouseLeave();
   }
-  else {
-    this.setState({headStyle: {top: "0px"}})
-  };
-  prevScroll = currentScroll;
-  }
+
   componentWillUnmount() {
     // you need to unbind the same listener that was binded.
     window.removeEventListener('resize', this.resize, false);
@@ -407,7 +282,7 @@ componentDidUpdate() {
   // To fix that, I need detect the resize action,
   // when it's resized back,
   // the data will be reset using the contentKeeper.
-  resize() {
+  resize(data) {
     if (window.innerWidth > 599) {
       this.setState({ resourceKinds: this.state.contentKeeper })
       resizeCount = 0;
@@ -416,13 +291,14 @@ componentDidUpdate() {
       // When the screen becomes small,
       // only the first time of resizing 
       // need to set video content choice as default.
-      resizeCount < 1 && this.contentChoose({ target: { value: "videos" } });
+      resizeCount < 1 && this.dataLoad(this.state.topicKeeper, data, "video");
       resizeCount++; 
     }
       // console.log(resizeCount)
   }
 
   render() {
+    console.log(this.state.resourceTest.videos.length);
     return (
       <div>
         <Header
@@ -441,7 +317,7 @@ componentDidUpdate() {
         />
         <ResourceKinds
           // onClick={this.onClick}
-          resourceKinds={this.state.resourceKinds}
+          resourceKinds={this.state.resourceTest}
           searchValue={this.state.searchValue}
           onSearch={this.onSearch}
           searchSubmit={this.searchSubmit}

@@ -5,8 +5,8 @@ export default function VideoKind(props) {
     <div className="content-kind content-kind-videos">
       <p className="kind-title">Videos</p>
       <div className="content">
-        {props.videoKind.length 
-          && (props.videoKind.map((item, index) => {
+        {props.videos.length 
+          && (props.videos.map((item, index) => {
               return (
                 <div
                   className="vba video-kind"
@@ -14,15 +14,15 @@ export default function VideoKind(props) {
                   // style={props.contentStyle}
                 >
                   <a
-                    href={item.resourceUrl}
+                    href={item.videoUrl}
                     className="resource-link"
                     alt="resource-link"
                   >
                   <figure>
-                    <img src={item.imgSrc} alt="" />
+                    <img src={item.img} alt="" />
                   </figure>
                   <p className="resource-name">
-                    {item.resourceName}
+                    {item.name}
                   </p>
                   </a>
                 </div>

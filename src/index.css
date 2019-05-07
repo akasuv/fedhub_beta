@@ -30,8 +30,7 @@ header {
   align-items: center;
   justify-content: space-around;
   cursor: pointer;
-  transition: 0.3s;
-  transition-delay: 0.2s;
+  transition: 0.5s;
   border: 0px solid red;
   background-color: white;
   -webkit-box-shadow: 0px 3px 5px 0px rgba(145, 145, 145, 0.43);
@@ -327,19 +326,21 @@ main .resource-content .content-kind .content .article-kind .from {
 }
 
 main .resource-content .content-kind .content-book {
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-flow: row dense;
 }
 
 main .resource-content .content-kind .content .book-kind {
   /* background-color: none; */
-  width: 200px;
+  width: 95%;
+  height: 200px;
   margin: 3px;
   /* background: none; */
   border: 0px solid black;
 }
 
 main .resource-content .content-kind .content .book-kind figure {
-  width: 100%;
+  width: 50%;
   /* max-height: 200px; */
   display: flex;
   justify-content: center;
@@ -352,6 +353,45 @@ main .resource-content .content-kind .content .book-kind figure img {
   box-shadow: 0 1px 3px 0px grey;
 }
 
+main .resource-content .content-kind .content .book-kind .book-info {
+  border: 0px solid red;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: left;
+
+}
+.book-info .book-name {
+  width: 90%;
+  font-size: 18px;
+  font-weight: bold;
+  border: 0px solid red;
+}
+.book-info .book-date, .book-edition, .book-isbn {
+  font-size: 13px;
+  color: grey;
+  width: 90%;
+  border: 0px solid purple;
+}
+.book-recommend {
+  font-size: 13px;
+  width: 90%;
+  margin-top: 5px;
+  overflow: hidden;
+  text-align: center;
+  border: 0px solid aqua;
+}
+.book-download {
+  width:80%;
+  height: 23px;
+  margin-top: 5px;
+  background: none;
+  border: 2px solid black;
+  outline: none;
+  cursor: pointer;
+}
 /* When screen size smaller than 999px, change style */
 /* ----change searchbar style---- */
 main .search-bar {
@@ -470,14 +510,15 @@ main #content-options li button {
     position: relative;
     grid-template-columns: 1fr;
   }
-
-  main .resource-content .content-kind .content-book {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
   main .resource-content .content-kind .content .book-kind {
-    box-sizing: border-box;
-    width: 170px;
+    border: none;
+  }
+  main .resource-content .content-kind .content .book-kind figure {
+    border: 0px solid red;
+    width: 50%;
+  }
+  main .resource-content .content-kind .content .book-kind figure img{
+    width: 60%;
   }
   main .resource-content .content-kind .content .video-kind .resource-link {
     width: 350px;
@@ -487,10 +528,6 @@ main #content-options li button {
   main .resource-content .content-kind .content .article-kind {
     width: 300px;
     height: 280px;
-  }
-
-  main .resource-content .content-kind .content .book-kind img {
-    width: 100%;
   }
 
   main .resource-content .content-kind .content .resource-link .resource-name {
@@ -542,7 +579,7 @@ main #content-options li button {
   }
 
   main .resource-content .content-kind .content-book {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 
   main .resource-content .content-kind .content .video-kind .resource-link {
@@ -556,7 +593,6 @@ main #content-options li button {
   }
 
   main .resource-content .content-kind .content .book-kind {
-    width: 180px;
     margin-bottom: 15px;
   }
 
@@ -618,7 +654,7 @@ main #content-options li button {
   }
 
   main .resource-content .content-kind .content-book {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 
   main .resource-content .content-kind .content .video-kind .resource-link {
@@ -631,8 +667,7 @@ main #content-options li button {
     height: 280px;
   }
 
-  main .resource-content .content-kind .content .book-kind {
-    width: 180px;
+  main .resource-content .content-kind .content .book-kind figure img{
     margin-bottom: 15px;
   }
 
@@ -669,7 +704,7 @@ main #content-options li button {
   } */
 
   main .resource-content .content-kind .content-book {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 
 }

@@ -6,9 +6,9 @@ export default function ArticleKind(props) {
       <p className="kind-title">Articles</p>
       <div className="content">
         {/* If the article kind has data, show the content */}
-        {props.articleKind.length
+        {props.articles.length
           // Map the data, and insert it into article section on page.
-          ? (props.articleKind.map((item, index) => {
+          ? (props.articles.map((item, index) => {
               return (
                 <div
                   className="vba article-kind"

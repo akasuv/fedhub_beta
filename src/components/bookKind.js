@@ -5,8 +5,8 @@ export default function BookKind(props) {
     <div className="content-kind content-kind-books">
       <p className="kind-title">Books</p>
       <div className="content content-book">
-        {props.bookKind.length 
-          ? (props.bookKind.map((item, index) => {
+        {props.books.length 
+          ? (props.books.map((item, index) => {
               return (
                 <div
                   className="vba book-kind"
@@ -16,6 +16,15 @@ export default function BookKind(props) {
                   <figure>
                     <img src={item.imgSrc} alt="books" />
                   </figure>
+                  <div className="book-info">
+                    <p className="book-name">{item.resourceName}</p>
+                    <p className="book-date">Year: 2019</p>
+                    <p className="book-edition">Edition: 1st</p>
+                    <p className="book-isbn">ISBN: 9781593270117</p>
+                    <p className="book-recommend">1299 readers liked it</p>
+                    <button className="book-download">Recommend</button>
+                    <button className="book-download">Get the book</button>
+                  </div>
                 </div>
               );
             }
