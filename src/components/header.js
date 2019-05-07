@@ -6,7 +6,7 @@ import menu from "../images/menu.png";
 
 export default function Header(props) {
   return (
-    <header onMouseLeave={props.mouseLeave}>
+    <header onMouseLeave={props.mouseLeave} style={props.headStyle}>
       <h1 onClick={props.backToHome}>FEDHUB</h1>
       <img
         id="smallest-screen-menu"

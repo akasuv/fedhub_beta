@@ -6,7 +6,7 @@ export default function ContentOptions(props) {
       <li>
         <button
           onClick={props.contentChoose}
-          value="videos"
+          value="videoKind"
           style={props.focusedStyle.videos}
         >
           Videos
@@ -15,7 +15,7 @@ export default function ContentOptions(props) {
       <li>
         <button
           onClick={props.contentChoose}
-          value="articles"
+          value="articleKind"
           style={props.focusedStyle.articles}
         >
           Articles
@@ -24,7 +24,7 @@ export default function ContentOptions(props) {
       <li>
         <button
           onClick={props.contentChoose}
-          value="books"
+          value="bookKind"
           style={props.focusedStyle.books}
         >
           Books

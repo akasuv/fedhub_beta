@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "http://wwsu97.github.io/fedhub_beta",
   "dependencies": {
+    "js-md5": "^0.7.3",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-scripts": "2.1.8"

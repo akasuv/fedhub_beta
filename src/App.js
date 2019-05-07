@@ -9,6 +9,7 @@ import { deflate } from "zlib";
 
 var MenuIconClickCount = 0;
 var resizeCount = 0;
+var prevScroll = 0;
 export default class App extends Component {
   constructor() {
     super();
@@ -26,6 +27,8 @@ export default class App extends Component {
         videos: { border: "3px solid black" },
         articles: {},
         books: {}
+      },
+      headStyle: {
       }
     };
   }
@@ -310,7 +313,7 @@ export default class App extends Component {
   // videos, articles, books,
   // Show the related contents.
   contentChoose = e => {
-    console.log(e.target.value)
+    // console.log(e.target.value)
     switch (e.target.value) {
       // When the video button is choosen,
       case "videos":
@@ -376,14 +379,27 @@ export default class App extends Component {
 
   componentDidMount() {
     window.addEventListener("resize", this.resize.bind(this));
+    window.addEventListener("scroll", this.scroll.bind(this));
+    this.scroll();
     this.resize();
+  }
+
+  scroll() {
+    let currentScroll = window.pageYOffset;
+    if (prevScroll < currentScroll) {
+    this.setState({headStyle: {top: "-80px"}}) 
+  }
+  else {
+    this.setState({headStyle: {top: "0px"}})
+  };
+  prevScroll = currentScroll;
   }
   componentWillUnmount() {
     // you need to unbind the same listener that was binded.
     window.removeEventListener('resize', this.resize, false);
 }
-  componentDidUpdate() {
-  }
+componentDidUpdate() {
+}
   // When the window is resized to small,
   // the content will be separated into three parts,
   // two of them is empty, so if you resize it back,
@@ -407,10 +423,10 @@ export default class App extends Component {
   }
 
   render() {
-    console.log(this.state.resourceKinds.videoKind);
     return (
       <div>
         <Header
+          headStyle={this.state.headStyle}
           rotateDeg={this.state.rotateDeg}
           mouseLeave={this.mouseLeave}
           rotateMenuIcon={this.rotateMenuIcon}
