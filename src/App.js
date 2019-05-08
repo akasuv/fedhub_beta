@@ -1,32 +1,25 @@
 import React, { Component } from "react";
-// import ReactDOM from "react-dom";
-
 import Header from "./components/header";
 import ResourceKinds from "./components/resourceKinds";
-import resourceData from "./resourceData";
-import resourceDataDefault from "./resourceDataDefault";
 import * as firebase from 'firebase';
-
 import { deflate } from "zlib";
 
 var MenuIconClickCount = 0;
 var resizeCount = 0;
 var prevScroll = 0;
+
 export default class App extends Component {
   constructor() {
     super();
     this.state = {
       sourceData: null,
-      resourceKinds: resourceDataDefault.resourceDefault,
-      contentKeeper: resourceDataDefault.resourceDefault,
-      resourceTest: {
+      resourceData: {
         videos: [],
         articles: [],
         books: [],
       },
       topicKeeper: "HomePage",
       mobileMode: false,
-      // searchValue: null,
       menuClick: false,
       rotateDeg: 0,
       menuSlideDown: -200,
@@ -39,30 +32,98 @@ export default class App extends Component {
       },
       headStyle: {
       },
-      testData: [],
     };
   }
 
-  // Change the content data from the choice
-  largeScreenTopicChoose = e => {
-    this.dataLoad(e.target.value, this.state.sourceData);
-    this.setState({topicKeeper: e.target.value});
-    // this.contentChoose({target:{value: "videos"}});
+  dataLoad(topic, data, type) {
+    const resourceData = {
+      videos: [],
+      articles: [],
+      books: [],
+    }
 
-    // When the choosing action is down,
-    // the menu will be closed with mouseLeave method.
+    if(!type) {
+      for(let parentKey in resourceData) {
+        for(let childKey in data[topic][parentKey]) {
+          resourceData[parentKey].push(data[topic][parentKey][childKey]);
+        }
+      }
+    } else {
+      for(let key in data[topic][type]) {
+        resourceData[type].push(data[topic][type][key]);
+      }
+    } 
+
+    this.setState({resourceData});
+  }
+
+  backToHome = () => {
+    window.innerWidth < 600
+    ? this.dataLoad('HomePage', this.state.sourceData, 'videos')
+    : this.dataLoad('HomePage', this.state.sourceData);
+    
+    this.setState({
+      topicKeeper: "HomePage",
+      searchValue: "",
+    });
+  };
+
+  // Change the content data from the choice
+  topicChoose = (e, type) => {
+    this.dataLoad(e.target.value, this.state.sourceData, type);
+    this.setState({topicKeeper: e.target.value, searchValue: ""});
     this.mouseLeave();
   };
 
-  // When the screen becomes smaller like a phone screen,
-  // Change the contents that will be shown in default.
-  smallestScreenTopicChoose = e => {
-    this.dataLoad(e.target.value, this.state.sourceData, "videos");
-    this.setState({topicKeeper: e.target.value});
+  smallScreenTopicChoose = e => {
+    this.topicChoose(e, "videos");
     this.focusedStyleChange({target: {value: "videos"}});
   };
 
-  focusedStyleChange(e) {
+  responsiveTopicChoose = e => {
+    window.innerWidth > 599
+      ? this.topicChoose(e)
+      : this.smalleScreenTopicChoose(e);
+  };
+
+  contentChoose = e => {
+    this.dataLoad(this.state.topicKeeper, this.state.sourceData, e.target.value);
+    this.focusedStyleChange(e);
+  };
+
+  onSearch = e => {
+    this.setState({ searchValue: e.target.value });
+    this.searchSubmit(e);
+  };
+
+  searchSubmit = e => {
+    const data = this.state.sourceData;
+    const search = this.state.searchValue;
+    const searchResult = {
+      videos: [],
+      articles: [],
+      books: [],
+    };
+
+    for(let searchKey in searchResult) {
+      for(let topicKey in data) {
+        for(let dataKey in data[topicKey][searchKey]) {
+          let targetName = data[topicKey][searchKey][dataKey].name;
+          if(targetName) {
+            if(targetName.toLowerCase().includes(search.toLowerCase())) {
+              let targetValue = data[topicKey][searchKey][dataKey];
+              searchResult[searchKey].push(targetValue)
+            }
+          }
+        }
+      }
+    }
+    
+    this.setState({resourceData: searchResult});
+    e.preventDefault();
+  };
+
+  focusedStyleChange = e => {
     const focusedStyle = {
       videos: {},
       articles: {},
@@ -74,15 +135,9 @@ export default class App extends Component {
         focusedStyle[key] = { border: "3px solid black" }
       }
     }
+
     this.setState({focusedStyle})
   }
-
-  topicChoose = e => {
-    window.innerWidth > 599
-      ? this.largeScreenTopicChoose(e)
-      : this.smallestScreenTopicChoose(e);
-      this.setState({searchValue: ""});
-  };
 
   rotateMenuIcon = () => {
     MenuIconClickCount++;
@@ -130,111 +185,19 @@ export default class App extends Component {
     });
   };
 
-  onSearch = e => {
-    this.setState({ searchValue: e.target.value });
-    this.searchSubmit(e);
-  };
-
-  // TODO:  Check if there is a better solution to do the search.
-  searchSubmit = e => {
-    const data = this.state.sourceData;
-    const search = this.state.searchValue;
-    const searchResult = {
-      videos: [],
-      articles: [],
-      books: [],
-    };
-
-    for(let searchKey in searchResult) {
-      for(let topicKey in data) {
-        for(let dataKey in data[topicKey][searchKey]) {
-          let targetName = data[topicKey][searchKey][dataKey].name;
-          if(targetName) {
-            if(targetName.toLowerCase().includes(search.toLowerCase())) {
-              let targetValue = data[topicKey][searchKey][dataKey];
-              searchResult[searchKey].push(targetValue)
-            }
-          }
-        }
-      }
-    }
-    
-    this.setState({resourceTest: searchResult});
-    e.preventDefault();
-  };
-
-  backToHome = () => {
-    window.innerWidth < 600
-    ? this.dataLoad('HomePage', this.state.sourceData, 'videos')
-    : this.dataLoad('HomePage', this.state.sourceData);
-    
-    this.setState({
-      topicKeeper: "HomePage",
-      searchValue: "",
-    });
-  };
-
-  contentChoose = e => {
-    this.dataLoad(this.state.topicKeeper, this.state.sourceData, e.target.value);
-    this.focusedStyleChange(e);
-  };
-
-  componentDidMount() {
-    // connect to firebase database 
-    const rootRef = firebase.database().ref();
-    rootRef.on('value', snap => {
-      const data = snap.toJSON();
-      window.innerWidth > 600 
-      ? this.dataLoad(this.state.topicKeeper, data)
-      : this.dataLoad(this.state.topicKeeper, data, 'videos');
-      this.setState({sourceData: data});   
-    })
-    
-    window.addEventListener("resize", this.resize.bind(this));
-    window.addEventListener("scroll", this.scroll.bind(this));
-    // window.innerWidth < 600 && this.resize(this.state.sourceData);
-    // this.scroll();
-  }
-
-  dataLoad(topic, data, type) {
-    const resourceTest = {
-      videos: [],
-      articles: [],
-      books: [],
-    }
-
-    if(!type) {
-      for(let parentKey in resourceTest) {
-        for(let childKey in data[topic][parentKey]) {
-          resourceTest[parentKey].push(data[topic][parentKey][childKey]);
-        }
-      }
-    } else {
-      for(let key in data[topic][type]){
-        resourceTest[type].push(data[topic][type][key]);
-      }
-    } 
-
-    this.setState({resourceTest});
-  }
-
   scroll() {
     let currentScroll = window.pageYOffset;
+    
     if (prevScroll < currentScroll) {
       this.setState({headStyle: {top: "-80px"}})
-    }
-    else {
+    } else {
       this.setState({headStyle: {top: "0px"}})
     };
+
     !(currentScroll < 0) && (prevScroll = currentScroll);
     this.mouseLeave();
   }
 
-  componentWillUnmount() {
-    // you need to unbind the same listener that was binded.
-    window.removeEventListener('resize', this.resize, false);
-    window.removeEventListener('scroll', this.scroll, false);
-}
   resize = () => {
     if (window.innerWidth > 599) {
       this.dataLoad(this.state.topicKeeper, this.state.sourceData)
@@ -244,6 +207,27 @@ export default class App extends Component {
       resizeCount < 1 && this.dataLoad(this.state.topicKeeper, this.state.sourceData, "videos");
       resizeCount++; 
     }
+  }
+
+  componentDidMount() {
+    // connect to firebase database 
+    const rootRef = firebase.database().ref();
+    rootRef.on('value', snap => {
+      const data = snap.toJSON();
+      
+      window.innerWidth > 600 
+      ? this.dataLoad(this.state.topicKeeper, data)
+      : this.dataLoad(this.state.topicKeeper, data, 'videos');
+      this.setState({sourceData: data});   
+    })
+    
+    window.addEventListener("resize", this.resize.bind(this));
+    window.addEventListener("scroll", this.scroll.bind(this));
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.resize, false);
+    window.removeEventListener('scroll', this.scroll, false);
   }
 
   render() {
@@ -258,21 +242,19 @@ export default class App extends Component {
           searchValue={this.state.searchValue}
           onSearch={this.onSearch}
           searchSubmit={this.searchSubmit}
-          topicChoose={this.topicChoose}
+          topicChoose={this.responsiveTopicChoose}
           backToHome={this.backToHome}
           menuSlideDown={this.state.menuSlideDown}
           menuMove={this.state.menuMove}
         />
         <ResourceKinds
-          // onClick={this.onClick}
-          resourceKinds={this.state.resourceTest}
+          resourceKinds={this.state.resourceData}
           searchValue={this.state.searchValue}
           onSearch={this.onSearch}
           searchSubmit={this.searchSubmit}
           topicChoose={this.topicChoose}
           contentChoose={this.contentChoose}
           focusedStyle={this.state.focusedStyle}
-          // contentSyle={this.state.contentSyle}
         />
     </div>
     );
