@@ -59,16 +59,23 @@ export default class App extends Component {
   smallestScreenTopicChoose = e => {
     this.dataLoad(e.target.value, this.state.sourceData, "videos");
     this.setState({topicKeeper: e.target.value});
-    // Keep the button focused style on the video button as default
-    this.setState({
-      focusedStyle: Object.assign(
-        {},
-        { videos: { border: "3px solid black" } },
-        { articles: { border: "none" } },
-        { books: { border: "none" } }
-      )
-    });
+    this.focusedStyleChange({target: {value: "videos"}});
   };
+
+  focusedStyleChange(e) {
+    const focusedStyle = {
+      videos: {},
+      articles: {},
+      books: {},
+    }
+
+    for(let key in focusedStyle) {
+      if (key === e.target.value ) {
+        focusedStyle[key] = { border: "3px solid black" }
+      }
+    }
+    this.setState({focusedStyle})
+  }
 
   topicChoose = e => {
     window.innerWidth > 599
@@ -77,7 +84,6 @@ export default class App extends Component {
       this.setState({searchValue: ""});
   };
 
-  // When the menu is clicked, the menu icon will rotate
   rotateMenuIcon = () => {
     MenuIconClickCount++;
     var degChange = 0;
@@ -104,8 +110,6 @@ export default class App extends Component {
     });
   };
 
-  // When the mouse leaved,
-  // it should have an same effect to the menu like the even click time.
   mouseLeave = () => {
     // if the menu click time is odd,
     // and the user leaved, the click time should add one,
@@ -128,80 +132,34 @@ export default class App extends Component {
 
   onSearch = e => {
     this.setState({ searchValue: e.target.value });
-    // this.searchSubmit(e);
+    this.searchSubmit(e);
   };
 
   // TODO:  Check if there is a better solution to do the search.
   searchSubmit = e => {
-    let searchResult = {
-      articleKind: [],
-      bookKind: [],
-      videoKind: []
+    const data = this.state.sourceData;
+    const search = this.state.searchValue;
+    const searchResult = {
+      videos: [],
+      articles: [],
+      books: [],
     };
 
-    // Check the search result is whether in the video kind of whole resource data
-    for (let key in resourceData) {
-      searchResult.videoKind = [
-        ...resourceData[key].videoKind.filter(item =>
-          item.resourceName
-            .toLowerCase()
-            .includes(this.state.searchValue.toLowerCase())
-        ),
-        // Using the spread operator to keep the result from being covered.
-        // The result should be all the data matching the search,
-        // instead of the last one.
-        ...searchResult.videoKind
-      ];
-    }
-
-    // Check the article kind.
-    for (let key in resourceData) {
-      searchResult.articleKind = [
-        ...resourceData[key].articleKind.filter(item =>
-          item.resourceName
-            .toLowerCase()
-            .includes(this.state.searchValue.toLowerCase())
-        ),
-        ...searchResult.articleKind
-      ];
-    }
-
-    // Check the book kind.
-    for (let key in resourceData) {
-      searchResult.bookKind = [
-        ...resourceData[key].bookKind.filter(item =>
-          item.resourceName
-            .toLowerCase()
-            .includes(this.state.searchValue.toLowerCase())
-        ),
-        ...searchResult.bookKind
-      ];
-
-      // FIXME: search results aren't separated.
-    }
-
-    // Show the search result.
-    // this.setState({ resourceKinds: searchResult, contentKeeper: searchResult });
-    // TODO: need a function to reuse this.
-    window.innerWidth < 600
-      ? this.setState({
-      resourceKinds: Object.assign(
-        {},
-        searchResult,
-        { articleKind: [] },
-        { bookKind: [] }
-        ),
-        contentKeeper: searchResult,
-        focusedStyle: Object.assign(
-          {},
-          { videos: { border: "3px solid black" } },
-          { articles: { border: "none" } },
-          { books: { border: "none" } }
-          ),
+    for(let searchKey in searchResult) {
+      for(let topicKey in data) {
+        for(let dataKey in data[topicKey][searchKey]) {
+          let targetName = data[topicKey][searchKey][dataKey].name;
+          if(targetName) {
+            if(targetName.toLowerCase().includes(search.toLowerCase())) {
+              let targetValue = data[topicKey][searchKey][dataKey];
+              searchResult[searchKey].push(targetValue)
+            }
+          }
         }
-        )
-      : this.setState({resourceKinds: searchResult, contentKeeper: searchResult});
+      }
+    }
     
+    this.setState({resourceTest: searchResult});
     e.preventDefault();
   };
 
@@ -218,6 +176,7 @@ export default class App extends Component {
 
   contentChoose = e => {
     this.dataLoad(this.state.topicKeeper, this.state.sourceData, e.target.value);
+    this.focusedStyleChange(e);
   };
 
   componentDidMount() {
@@ -225,14 +184,16 @@ export default class App extends Component {
     const rootRef = firebase.database().ref();
     rootRef.on('value', snap => {
       const data = snap.toJSON();
-      this.dataLoad('HomePage', data);
-      this.setState({sourceData: data});
-      this.resize(data);
+      window.innerWidth > 600 
+      ? this.dataLoad(this.state.topicKeeper, data)
+      : this.dataLoad(this.state.topicKeeper, data, 'videos');
+      this.setState({sourceData: data});   
     })
-
+    
     window.addEventListener("resize", this.resize.bind(this));
     window.addEventListener("scroll", this.scroll.bind(this));
-    this.scroll();
+    // window.innerWidth < 600 && this.resize(this.state.sourceData);
+    // this.scroll();
   }
 
   dataLoad(topic, data, type) {
@@ -272,33 +233,20 @@ export default class App extends Component {
   componentWillUnmount() {
     // you need to unbind the same listener that was binded.
     window.removeEventListener('resize', this.resize, false);
+    window.removeEventListener('scroll', this.scroll, false);
 }
-componentDidUpdate() {
-}
-  // When the window is resized to small,
-  // the content will be separated into three parts,
-  // two of them is empty, so if you resize it back,
-  // the page will show the two is empty.
-  // To fix that, I need detect the resize action,
-  // when it's resized back,
-  // the data will be reset using the contentKeeper.
-  resize(data) {
+  resize = () => {
     if (window.innerWidth > 599) {
-      this.setState({ resourceKinds: this.state.contentKeeper })
+      this.dataLoad(this.state.topicKeeper, this.state.sourceData)
       resizeCount = 0;
     } else 
     { 
-      // When the screen becomes small,
-      // only the first time of resizing 
-      // need to set video content choice as default.
-      resizeCount < 1 && this.dataLoad(this.state.topicKeeper, data, "video");
+      resizeCount < 1 && this.dataLoad(this.state.topicKeeper, this.state.sourceData, "videos");
       resizeCount++; 
     }
-      // console.log(resizeCount)
   }
 
   render() {
-    console.log(this.state.resourceTest.videos.length);
     return (
       <div>
         <Header
