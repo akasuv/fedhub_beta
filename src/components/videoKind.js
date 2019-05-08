@@ -10,7 +10,7 @@ export default function VideoKind(props) {
               return (
                 <div
                   className="vba video-kind"
-                  key={index}
+                  key={item.id}
                   // style={props.contentStyle}
                 >
                   <a
