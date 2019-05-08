@@ -94,7 +94,6 @@ export default class App extends Component {
 
   onSearch = e => {
     this.setState({ searchValue: e.target.value });
-    this.searchSubmit(e);
   };
 
   searchSubmit = e => {
