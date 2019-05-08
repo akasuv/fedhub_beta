@@ -19,6 +19,21 @@ code {
   font-family: resource-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+#loading {
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  z-index: 9999;
+  display: flex;
+  background-color: white;
+  justify-content: center;
+  align-items: center;
+}
+#loading img {
+  width: 80px;
+}
 /* Header components style  */
 header {
   width: 100%;

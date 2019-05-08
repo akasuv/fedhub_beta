@@ -3,6 +3,7 @@ import Header from "./components/header";
 import ResourceKinds from "./components/resourceKinds";
 import * as firebase from 'firebase';
 import { deflate } from "zlib";
+import loading from './icons/loading.gif';
 
 var MenuIconClickCount = 0;
 var resizeCount = 0;
@@ -83,7 +84,7 @@ export default class App extends Component {
   responsiveTopicChoose = e => {
     window.innerWidth > 599
       ? this.topicChoose(e)
-      : this.smalleScreenTopicChoose(e);
+      : this.smallScreenTopicChoose(e);
   };
 
   contentChoose = e => {
@@ -188,16 +189,17 @@ export default class App extends Component {
   scroll() {
     let currentScroll = window.pageYOffset;
     
-    if (prevScroll < currentScroll) {
-      this.setState({headStyle: {top: "-80px"}})
-    } else {
-      this.setState({headStyle: {top: "0px"}})
-    };
+    if(currentScroll > 50) {
+      if (prevScroll < currentScroll) {
+        this.setState({headStyle: {top: "-80px"}})
+      } else {
+        this.setState({headStyle: {top: "0px"}})
+      };
 
-    !(currentScroll < 0) && (prevScroll = currentScroll);
-    this.mouseLeave();
+      !(currentScroll < 0) && (prevScroll = currentScroll);
+      this.mouseLeave();
+    }
   }
-
   resize = () => {
     if (window.innerWidth > 599) {
       this.dataLoad(this.state.topicKeeper, this.state.sourceData)
@@ -220,7 +222,7 @@ export default class App extends Component {
       : this.dataLoad(this.state.topicKeeper, data, 'videos');
       this.setState({sourceData: data});   
     })
-    
+
     window.addEventListener("resize", this.resize.bind(this));
     window.addEventListener("scroll", this.scroll.bind(this));
   }
@@ -247,15 +249,21 @@ export default class App extends Component {
           menuSlideDown={this.state.menuSlideDown}
           menuMove={this.state.menuMove}
         />
-        <ResourceKinds
-          resourceKinds={this.state.resourceData}
-          searchValue={this.state.searchValue}
-          onSearch={this.onSearch}
-          searchSubmit={this.searchSubmit}
-          topicChoose={this.topicChoose}
-          contentChoose={this.contentChoose}
-          focusedStyle={this.state.focusedStyle}
-        />
+        {
+          this.state.sourceData 
+          ? <ResourceKinds
+            resourceKinds={this.state.resourceData}
+            searchValue={this.state.searchValue}
+            onSearch={this.onSearch}
+            searchSubmit={this.searchSubmit}
+            topicChoose={this.topicChoose}
+            contentChoose={this.contentChoose}
+            focusedStyle={this.state.focusedStyle}
+          />
+          : <div id="loading">
+            <img src={loading} alt="loading"></img>
+          </div>
+        }
     </div>
     );
   }
