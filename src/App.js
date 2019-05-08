@@ -234,37 +234,35 @@ export default class App extends Component {
 
   render() {
     return (
-      <div>
-        <Header
-          headStyle={this.state.headStyle}
-          rotateDeg={this.state.rotateDeg}
-          mouseLeave={this.mouseLeave}
-          rotateMenuIcon={this.rotateMenuIcon}
-          menuClick={this.state.menuClick}
-          searchValue={this.state.searchValue}
-          onSearch={this.onSearch}
-          searchSubmit={this.searchSubmit}
-          topicChoose={this.responsiveTopicChoose}
-          backToHome={this.backToHome}
-          menuSlideDown={this.state.menuSlideDown}
-          menuMove={this.state.menuMove}
-        />
-        {
-          this.state.sourceData 
-          ? <ResourceKinds
-            resourceKinds={this.state.resourceData}
-            searchValue={this.state.searchValue}
-            onSearch={this.onSearch}
-            searchSubmit={this.searchSubmit}
-            topicChoose={this.topicChoose}
-            contentChoose={this.contentChoose}
-            focusedStyle={this.state.focusedStyle}
+      this.state.sourceData
+      ? <div>
+          <Header
+              headStyle={this.state.headStyle}
+              rotateDeg={this.state.rotateDeg}
+              mouseLeave={this.mouseLeave}
+              rotateMenuIcon={this.rotateMenuIcon}
+              menuClick={this.state.menuClick}
+              searchValue={this.state.searchValue}
+              onSearch={this.onSearch}
+              searchSubmit={this.searchSubmit}
+              topicChoose={this.responsiveTopicChoose}
+              backToHome={this.backToHome}
+              menuSlideDown={this.state.menuSlideDown}
+              menuMove={this.state.menuMove}
           />
-          : <div id="loading">
-            <img src={loading} alt="loading"></img>
-          </div>
-        }
-    </div>
+          <ResourceKinds
+              resourceKinds={this.state.resourceData}
+              searchValue={this.state.searchValue}
+              onSearch={this.onSearch}
+              searchSubmit={this.searchSubmit}
+              topicChoose={this.topicChoose}
+              contentChoose={this.contentChoose}
+              focusedStyle={this.state.focusedStyle}
+            />
+        </div>
+      : <div id="loading">
+          <img src={loading} alt="loading"></img>
+        </div>
     );
   }
 }
