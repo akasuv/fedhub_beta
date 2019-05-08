@@ -1,5 +1,5 @@
 import React from "react";
-import searchIcon from "../images/searchIcon.png";
+import searchIcon from "../icons/searchIcon.png";
 
 export default function SearchBar({ value, onSearch, onSubmit }) {
   return (

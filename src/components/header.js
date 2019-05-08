@@ -2,7 +2,7 @@ import React from "react";
 
 import SearchBar from "../components/searchBar";
 import TechOptions from "../components/techOptions";
-import menu from "../images/menu.png";
+import menu from "../icons/menu.png";
 
 export default function Header(props) {
   return (
