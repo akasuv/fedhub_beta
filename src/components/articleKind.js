@@ -8,23 +8,24 @@ export default function ArticleKind(props) {
         {/* If the article kind has data, show the content */}
         {props.articles.length
           // Map the data, and insert it into article section on page.
-          ? (props.articles.map((item, index) => {
+          ? (props.articles.map(item => {
               return (
                 <div
                   className="vba article-kind"
-                  key={index}
+                  key={item.id}
                   // style={props.contentStyle}
                 >
                   <a
-                    href={item.resourceUrl}
+                    href={item.link}
                     className="resource-link"
                     alt="resource-link"
+                    target="blank"
                   >
                   <figure>
                     <img src={item.imgSrc} alt="article" />
                   </figure>
                   <p className="resource-name">
-                    {item.resourceName}
+                    {item.name}
                   </p>
                   <p className="from">from Medium</p>
                   </a>

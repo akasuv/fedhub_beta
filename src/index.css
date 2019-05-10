@@ -311,20 +311,26 @@ main .resource-content .content-kind .content .article-kind {
   margin: 10px 5px;
   border-radius: 5px;
   box-shadow: 0px 1px 5px 1px #D1D5D8;
+  border: 0px solid green;
 }
 
 main .resource-content .content-kind .content .article-kind .resource-link figure {
-  max-height: 170px;
+  width: 90%;
+  max-height: 150px;
+  margin: 5px;
   overflow: hidden;
+  border: 0px solid black;
 }
 
 main .resource-content .content-kind .content .article-kind .resource-link figure img {
+  width: 100%;
   border: 1px solid #D1D5D8;
 }
 
 main .resource-content .content-kind .content .article-kind .resource-link .resource-name {
   width: 90%;
   border: 0px solid red;
+  margin: 5px;
 }
 main .resource-content .content-kind .content .article-kind .from {
   /* font-weight: bold; */
@@ -370,10 +376,11 @@ main .resource-content .content-kind .content .book-kind figure img {
 main .resource-content .content-kind .content .book-kind .book-info {
   border: 0px solid red;
   width: 50%;
+  height: 150px;
+  margin: auto;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-around;
   text-align: left;
 
 }
@@ -384,27 +391,34 @@ main .resource-content .content-kind .content .book-kind .book-info {
   border: 0px solid red;
 }
 .book-info .book-date, .book-edition, .book-isbn {
-  font-size: 13px;
+  font-size: 12px;
   color: grey;
   width: 90%;
   border: 0px solid purple;
 }
 .book-recommend {
-  font-size: 13px;
+  font-size: 12px;
   width: 90%;
   margin-top: 5px;
   overflow: hidden;
   text-align: center;
   border: 0px solid aqua;
 }
+.book-info a {
+  color: black;
+  text-decoration: none;
+}
 .book-download {
-  width:80%;
+  width: 100px;
   height: 23px;
-  margin-top: 5px;
   background: none;
   border: 2px solid black;
   outline: none;
   cursor: pointer;
+}
+.book-download:hover {
+  color: white;
+  background-color: black;
 }
 /* When screen size smaller than 999px, change style */
 /* ----change searchbar style---- */

@@ -17,6 +17,7 @@ export default function VideoKind(props) {
                     href={item.videoUrl}
                     className="resource-link"
                     alt="resource-link"
+                    target="blank"
                   >
                   <figure>
                     <img src={item.img} alt="" />

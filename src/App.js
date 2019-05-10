@@ -19,6 +19,7 @@ export default class App extends Component {
         articles: [],
         books: [],
       },
+      keepSearchData: null,
       topicKeeper: "HomePage",
       mobileMode: false,
       menuClick: false,
@@ -58,21 +59,26 @@ export default class App extends Component {
     this.setState({resourceData});
   }
 
+  resetKeepers = (topic) => {
+    this.setState({
+      topicKeeper: topic,
+      searchValue: "",
+      keepSearchData: null,
+    })
+  }
+
   backToHome = () => {
     window.innerWidth < 600
-    ? this.dataLoad('HomePage', this.state.sourceData, 'videos')
-    : this.dataLoad('HomePage', this.state.sourceData);
+    ? this.dataLoad("HomePage", this.state.sourceData, 'videos')
+    : this.dataLoad("HomePage", this.state.sourceData);
     
-    this.setState({
-      topicKeeper: "HomePage",
-      searchValue: "",
-    });
+    this.resetKeepers("HomePage");
   };
 
   // Change the content data from the choice
   topicChoose = (e, type) => {
     this.dataLoad(e.target.value, this.state.sourceData, type);
-    this.setState({topicKeeper: e.target.value, searchValue: ""});
+    this.resetKeepers(e.target.value);
     this.mouseLeave();
   };
 
@@ -88,7 +94,11 @@ export default class App extends Component {
   };
 
   contentChoose = e => {
-    this.dataLoad(this.state.topicKeeper, this.state.sourceData, e.target.value);
+    
+    !this.state.keepSearchData
+      ?this.dataLoad(this.state.topicKeeper, this.state.sourceData, e.target.value)
+      :this.keepSearchRes(e.target.value);
+
     this.focusedStyleChange(e);
   };
 
@@ -97,31 +107,52 @@ export default class App extends Component {
   };
 
   searchSubmit = e => {
-    const data = this.state.sourceData;
+    const data = {...this.state.sourceData};
     const search = this.state.searchValue;
     const searchResult = {
       videos: [],
       articles: [],
       books: [],
     };
-
-    for(let searchKey in searchResult) {
-      for(let topicKey in data) {
-        for(let dataKey in data[topicKey][searchKey]) {
+    
+    delete data.HomePage;
+    
+    for (let topicKey in data) {
+      for (let searchKey in searchResult) {
+        for (let dataKey in data[topicKey][searchKey]) {
           let targetName = data[topicKey][searchKey][dataKey].name;
-          if(targetName) {
-            if(targetName.toLowerCase().includes(search.toLowerCase())) {
+          if (targetName) {
+            if (targetName.toLowerCase().includes(search.toLowerCase())) {
               let targetValue = data[topicKey][searchKey][dataKey];
-              searchResult[searchKey].push(targetValue)
+              searchResult[searchKey].push(targetValue);
             }
           }
         }
       }
     }
     
-    this.setState({resourceData: searchResult});
+    this.state.searchValue && this.setState(
+      {
+        resourceData: searchResult,
+        keepSearchData: searchResult,        
+      }
+    );
     e.preventDefault();
   };
+
+  keepSearchRes = (type=null) => {
+    const resourceData = {
+      videos: [],
+      articles: [],
+      books: []
+    }
+    
+    this.state.keepSearchData[type].map(item => {
+      resourceData[type].push(item);    
+    });
+
+    this.setState({resourceData});
+  }
 
   focusedStyleChange = e => {
     const focusedStyle = {
@@ -201,11 +232,17 @@ export default class App extends Component {
   }
   resize = () => {
     if (window.innerWidth > 599) {
-      this.dataLoad(this.state.topicKeeper, this.state.sourceData)
+      !this.state.keepSearchData
+        ?this.dataLoad(this.state.topicKeeper, this.state.sourceData)
+        :this.setState({resourceData: this.state.keepSearchData});
       resizeCount = 0;
     } else 
     { 
-      resizeCount < 1 && this.dataLoad(this.state.topicKeeper, this.state.sourceData, "videos");
+      if(resizeCount < 1) 
+        !this.state.keepSearchData
+          ?this.dataLoad(this.state.topicKeeper, this.state.sourceData, "videos")
+          :this.keepSearchRes("videos");
+
       resizeCount++; 
     }
   }
