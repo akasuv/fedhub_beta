@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/fedhub_beta/precache-manifest.2a4e52984d6f20be14b1a4ccba9fec35.js"
+  "/fedhub_beta/precache-manifest.5de9a49fca268efe62d9156c713556bf.js"
 );
 
 workbox.clientsClaim();
