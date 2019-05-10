@@ -26,27 +26,6 @@ export default function TechOptions(props) {
             children="React" 
           />
         </li>
-        <li>
-          <Button 
-            onClick={props.topicChoose} 
-            value="Vue" 
-            children="Vue" 
-          />
-        </li>
-        <li>
-          <Button
-            onClick={props.topicChoose}
-            value="Angular"
-            children="Angular"
-          />
-        </li>
-        <li>
-          <Button
-            onClick={props.topicChoose}
-            value="Bootstrap"
-            children="Bootstrap"
-          />
-        </li>
       </ul>
     </div>
   );

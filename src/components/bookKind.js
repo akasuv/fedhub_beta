@@ -15,7 +15,7 @@ export default function BookKind(props) {
                   // style={props.contentStyle}
                 >
                   <figure>
-                    <img src={item.imgSrc} alt="books" />
+                    <img src={item.imgSrc} alt="book cover" />
                   </figure>
                   <div className="book-info">
                     <p className="book-name">
@@ -25,9 +25,10 @@ export default function BookKind(props) {
                           : item.name
                       }
                     </p>
-                    <p className="book-date">Year: {item.year}</p>
-                    <p className="book-edition">Edition: {item.edition}</p>
-                    <p className="book-isbn">ISBN: {item.isbn}</p>
+                    <div className="book-detail">
+                      <p className="book-date">Year: {item.year}</p>
+                      <p className="book-edition">Edition: {item.edition}</p>
+                    </div>
                     <a href={item.link} target="blank">
                       <button className="book-download">
                         Get the book

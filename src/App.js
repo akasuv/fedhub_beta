@@ -72,6 +72,7 @@ export default class App extends Component {
     ? this.dataLoad("HomePage", this.state.sourceData, 'videos')
     : this.dataLoad("HomePage", this.state.sourceData);
     
+    this.focusedStyleChange({target: {value: "videos"}});
     this.resetKeepers("HomePage");
   };
 
@@ -116,7 +117,7 @@ export default class App extends Component {
     };
     
     delete data.HomePage;
-    
+
     for (let topicKey in data) {
       for (let searchKey in searchResult) {
         for (let dataKey in data[topicKey][searchKey]) {
@@ -181,7 +182,7 @@ export default class App extends Component {
     // and if the click time is even, the icon will back to
     // the default position, the menu will slide up.
     MenuIconClickCount % 2 !== 0 ? (degChange = 90) : (degChange = -90);
-    MenuIconClickCount % 2 !== 0 ? (slide = -5) : (slide = -200);
+    MenuIconClickCount % 2 !== 0 ? (slide = -85) : (slide = -200);
 
     //TODO: The menu position covers the content choosing button.
     MenuIconClickCount % 2 !== 0 ? (move = 60) : (move = -999);

@@ -269,7 +269,7 @@ main .resource-content .content-kind .content .resource-link figure {
 
 main .resource-content .content-kind .content .resource-link img {
   width: 90%;
-  /* border: 3px solid green; */
+  border: 1px solid grey;
 }
 
 main .resource-content .content-kind .content .resource-link .resource-name {
@@ -395,14 +395,6 @@ main .resource-content .content-kind .content .book-kind .book-info {
   color: grey;
   width: 90%;
   border: 0px solid purple;
-}
-.book-recommend {
-  font-size: 12px;
-  width: 90%;
-  margin-top: 5px;
-  overflow: hidden;
-  text-align: center;
-  border: 0px solid aqua;
 }
 .book-info a {
   color: black;
