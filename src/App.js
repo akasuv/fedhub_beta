@@ -239,10 +239,13 @@ export default class App extends Component {
       resizeCount = 0;
     } else 
     { 
-      if(resizeCount < 1) 
+      if(resizeCount < 1) { 
         !this.state.keepSearchData
           ?this.dataLoad(this.state.topicKeeper, this.state.sourceData, "videos")
           :this.keepSearchRes("videos");
+        
+        this.focusedStyleChange({target: {value: "videos"}});
+      }
 
       resizeCount++; 
     }
