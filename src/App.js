@@ -309,4 +309,4 @@ export default class App extends Component {
 }
 
 ReactGA.initialize('UA-139993181-1');
-ReactGA.pageview('/');
+ReactGA.pageview('/fedhub_beta');
