@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import Header from "./components/header";
 import ResourceKinds from "./components/resourceKinds";
 import * as firebase from 'firebase';
-import { deflate } from "zlib";
 import loading from './icons/loading.gif';
+import ReactGA from 'react-ga';
+import { deflate } from "zlib";
 
 var MenuIconClickCount = 0;
 var resizeCount = 0;
@@ -306,3 +307,6 @@ export default class App extends Component {
     );
   }
 }
+
+ReactGA.initialize('UA-139993181-1');
+ReactGA.pageview('/');
