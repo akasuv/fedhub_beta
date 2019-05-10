@@ -356,7 +356,7 @@ main .resource-content .content-kind .content .book-kind {
   height: 200px;
   margin: 3px;
   /* background: none; */
-  border: 3px solid black;
+  border: 0px solid black;
 }
 
 main .resource-content .content-kind .content .book-kind figure {
@@ -365,7 +365,7 @@ main .resource-content .content-kind .content .book-kind figure {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 4px solid red;
+  border: 0px solid red;
 }
 
 main .resource-content .content-kind .content .book-kind figure img {
