@@ -8,7 +8,7 @@ export default function TechOptions(props) {
         <li>
           <Button
             onClick={props.topicChoose}
-            value="Html"
+            value="Html&CSS"
             children="HTML&CSS"
           />
         </li>
