@@ -352,7 +352,7 @@ main .resource-content .content-kind .content-book {
 
 main .resource-content .content-kind .content .book-kind {
   /* background-color: none; */
-  width: 95%;
+  width: 300px;
   height: 200px;
   margin: 3px;
   /* background: none; */
@@ -360,7 +360,7 @@ main .resource-content .content-kind .content .book-kind {
 }
 
 main .resource-content .content-kind .content .book-kind figure {
-  width: 50%;
+  width: 80%;
   /* max-height: 200px; */
   display: flex;
   justify-content: center;
@@ -369,7 +369,7 @@ main .resource-content .content-kind .content .book-kind figure {
 }
 
 main .resource-content .content-kind .content .book-kind figure img {
-  width: 80%;
+  width: 70%;
   box-shadow: 0 1px 3px 0px grey;
 }
 
@@ -390,7 +390,7 @@ main .resource-content .content-kind .content .book-kind .book-info {
   font-weight: bold;
   border: 0px solid red;
 }
-.book-info .book-date, .book-edition, .book-isbn {
+.book-info .book-date, .book-edition {
   font-size: 12px;
   color: grey;
   width: 90%;
