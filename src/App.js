@@ -300,6 +300,7 @@ export default class App extends Component {
               contentChoose={this.contentChoose}
               focusedStyle={this.state.focusedStyle}
             />
+            <p>branch test</p>
         </div>
       : <div id="loading">
           <img src={loading} alt="loading"></img>
