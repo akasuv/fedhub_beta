@@ -78,9 +78,9 @@ export default class App extends Component {
   };
 
   // Change the content data from the choice
-  topicChoose = (e, type) => {
-    this.dataLoad(e.target.value, this.state.sourceData, type);
-    this.resetKeepers(e.target.value);
+  topicChoose = (type) => {
+    this.dataLoad(this.props.match.params.name, this.state.sourceData, type);
+    this.resetKeepers(this.props.match.params.name);
     this.mouseLeave();
   };
 
@@ -277,7 +277,7 @@ export default class App extends Component {
     return (
       this.state.sourceData
       ? <div>
-          <Header
+          {/* <Header
               headStyle={this.state.headStyle}
               rotateDeg={this.state.rotateDeg}
               mouseLeave={this.mouseLeave}
@@ -290,7 +290,7 @@ export default class App extends Component {
               backToHome={this.backToHome}
               menuSlideDown={this.state.menuSlideDown}
               menuMove={this.state.menuMove}
-          />
+          /> */}
           <ResourceKinds
               resourceKinds={this.state.resourceData}
               searchValue={this.state.searchValue}
@@ -300,7 +300,6 @@ export default class App extends Component {
               contentChoose={this.contentChoose}
               focusedStyle={this.state.focusedStyle}
             />
-            <p>branch test</p>
         </div>
       : <div id="loading">
           <img src={loading} alt="loading"></img>
