@@ -270,8 +270,6 @@ export default class App extends Component {
     window.addEventListener("resize", this.resize.bind(this));
     window.addEventListener("scroll", this.scroll.bind(this));
 
-    ReactGA.initialize('UA-139993181-1');
-    ReactGA.pageview("/fedhub_beta");
   }
 
   componentWillUnmount() {
@@ -314,3 +312,5 @@ export default class App extends Component {
   }
 }
 
+ReactGA.initialize('UA-139993181-1');
+ReactGA.pageview("/fedhub_beta");
