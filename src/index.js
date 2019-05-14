@@ -4,6 +4,8 @@ import './index.css';
 import App from './App';
 import firebaseConfig from './firebaseConfig';
 import * as firebase from 'firebase';
+import withTracker from './withTracker';
+
 // import * as serviceWorker from './serviceWorker';
 
 // Initialize Firebase
