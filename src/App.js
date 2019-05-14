@@ -4,10 +4,12 @@ import ResourceKinds from "./components/resourceKinds";
 import * as firebase from 'firebase';
 import loading from './icons/loading.gif';
 import { deflate } from "zlib";
+import ReactGA from 'react-ga';
 
 var MenuIconClickCount = 0;
 var resizeCount = 0;
 var prevScroll = 0;
+
 
 export default class App extends Component {
   constructor() {
@@ -265,6 +267,9 @@ export default class App extends Component {
 
     window.addEventListener("resize", this.resize.bind(this));
     window.addEventListener("scroll", this.scroll.bind(this));
+
+    ReactGA.initialize('UA-139993181-1');
+    ReactGA.pageview(window.location.pathname + window.location.search);
   }
 
   componentWillUnmount() {
