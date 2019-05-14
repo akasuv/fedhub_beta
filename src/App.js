@@ -4,8 +4,7 @@ import ResourceKinds from "./components/resourceKinds";
 import * as firebase from 'firebase';
 import loading from './icons/loading.gif';
 import { deflate } from "zlib";
-import ReactGA from 'react-ga';
-
+import {initGA, logPageView} from './gAnalystics'
 
 var MenuIconClickCount = 0;
 var resizeCount = 0;
@@ -270,6 +269,8 @@ export default class App extends Component {
     window.addEventListener("resize", this.resize.bind(this));
     window.addEventListener("scroll", this.scroll.bind(this));
 
+    initGA();
+    logPageView();
   }
 
   componentWillUnmount() {
@@ -311,6 +312,3 @@ export default class App extends Component {
     );
   }
 }
-
-ReactGA.initialize('UA-139993181-1');
-ReactGA.pageview("/fedhub_beta");
