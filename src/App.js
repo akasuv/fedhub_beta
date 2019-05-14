@@ -271,7 +271,7 @@ export default class App extends Component {
     window.addEventListener("scroll", this.scroll.bind(this));
 
     ReactGA.initialize('UA-139993181-1');
-    ReactGA.pageview("/fed-hub");
+    ReactGA.pageview("/fedhub_beta");
   }
 
   componentWillUnmount() {
