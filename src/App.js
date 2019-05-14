@@ -6,6 +6,7 @@ import loading from './icons/loading.gif';
 import { deflate } from "zlib";
 import ReactGA from 'react-ga';
 
+
 var MenuIconClickCount = 0;
 var resizeCount = 0;
 var prevScroll = 0;
@@ -233,6 +234,7 @@ export default class App extends Component {
       this.mouseLeave();
     }
   }
+
   resize = () => {
     if (window.innerWidth > 599) {
       !this.state.keepSearchData
@@ -253,11 +255,6 @@ export default class App extends Component {
     }
   }
 
-  IntialGA = () => {
-    ReactGA.initialize('UA-139993181-1');
-    ReactGA.pageview('/');
-  }
-
   componentDidMount() {
     // connect to firebase database 
     const rootRef = firebase.database().ref();
@@ -273,7 +270,8 @@ export default class App extends Component {
     window.addEventListener("resize", this.resize.bind(this));
     window.addEventListener("scroll", this.scroll.bind(this));
 
-    this.IntialGA();
+    ReactGA.initialize('UA-139993181-1');
+    ReactGA.pageview("/fed-hub");
   }
 
   componentWillUnmount() {
@@ -315,3 +313,4 @@ export default class App extends Component {
     );
   }
 }
+
