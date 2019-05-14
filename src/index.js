@@ -12,7 +12,7 @@ firebase.initializeApp(firebaseConfig);
 
 const routing = (
   <Router>
-      <Route path="/" component={App} />
+      <Route exact path="/" component={App} />
   </Router>
 )
 

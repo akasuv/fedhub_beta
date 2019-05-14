@@ -24,3 +24,4 @@ yarn-error.log*
 
 #firebase config
 firebaseConfig.js
+intialGA.js
