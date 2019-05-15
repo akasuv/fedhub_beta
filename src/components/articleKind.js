@@ -8,7 +8,7 @@ export default function ArticleKind(props) {
         {/* If the article kind has data, show the content */}
         {props.articles.length
           // Map the data, and insert it into article section on page.
-          ? (props.articles.map(item => {
+          && (props.articles.map(item => {
               return (
                 <div
                   className="vba article-kind"
@@ -33,11 +33,6 @@ export default function ArticleKind(props) {
                 );
               }
             )) 
-          : (
-              <p className="no-related" style={{ color: "grey" }}>
-                No related articles
-              </p>
-            )
         }
       </div>
     </div>

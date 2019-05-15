@@ -6,7 +6,7 @@ export default function BookKind(props) {
       <p className="kind-title">Books</p>
       <div className="content content-book">
         {props.books.length 
-          ? (props.books.map(item => {
+          && (props.books.map(item => {
               let name = item.name.substring(0, 25) + '...'
               return (
                 <div
@@ -39,11 +39,6 @@ export default function BookKind(props) {
               );
             }
           )) 
-          : (
-              <p className="no-related" style={{ color: "grey" }}>
-                No related books
-              </p>
-            )
         }
       </div>
     </div>
