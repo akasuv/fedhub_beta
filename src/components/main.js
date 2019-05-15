@@ -186,36 +186,21 @@ class Main extends React.Component {
 
   render() {
     return this.state.sourceData ? (
-      // <main>
-      //   <SearchBar
-      //     value={this.state.searchValue}
-      //     onSearch={this.onSearch}
-      //     onSubmit={this.searchSubmit}
-      //   />
-      //   <ContentOptions 
-      //     contentChoose={this.contentChoose} 
-      //     focusedStyle={this.state.focusedStyle} 
-      //   />
-      //   <div className="resource-content">
-      //     <VideoKind
-      //       videos={this.state.resourceData.videos}
-      //       // contentStyle={props.contentStyle.videos}
-      //     />
-      //     <ArticleKind
-      //       articles={this.state.resourceData.articles}
-      //       // contentStyle={props.contentStyle.articles}
-      //     />
-      //     <BookKind
-      //       books={this.state.resourceData.books}
-      //       // contentStyle={props.contentStyle.books}
-      //     />
-      //   </div>
-
-      // </main>
-      <ResourceKinds 
+      
+      <ResourceKinds
+        resourceKinds={this.state.resourceData}
+        searchValue={this.state.searchValue}
+        onSearch={this.onSearch}
+        searchSubmit={this.searchSubmit}
+        topicChoose={this.topicChoose}
+        contentChoose={this.contentChoose}
+        focusedStyle={this.state.focusedStyle}
       />
+      
     ) : (
-      <div style={{width: "800px", height: "500px", backgroundColor: "blue"}}>Loading...</div>
+      <div id="loading">
+      <img src={loading} alt="loading"></img>
+    </div>
     );
   }
 }

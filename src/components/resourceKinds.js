@@ -6,20 +6,57 @@ import ArticleKind from "./articleKind";
 import SearchBar from "./searchBar";
 import TechOptions from "./techOptions";
 import ContentOptions from "./contentOptions";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 export default function ResourceKinds(props) {
   return (
     <main>
-      <SearchBar
-        value={props.searchValue}
-        onSearch={props.onSearch}
-        onSubmit={props.searchSubmit}
-      />
-      <TechOptions topicChoose={props.topicChoose} />
-      <ContentOptions
-        contentChoose={props.contentChoose}
-        focusedStyle={props.focusedStyle}
-      />
+      {window.innerWidth < 600 ? (
+        <section>
+          <Route
+            render={({ history }) => (
+              <SearchBar
+                value={props.searchValue}
+                onSearch={props.onSearch}
+                onSubmit={e => {
+                  history.push(`/?search=${props.searchValue}`);
+                  e.preventDefault();
+                }}
+              />
+            )}
+          />
+          <div id="tech-kind">
+            <ul>
+              <li>
+                <Link to="/Html&CSS">Html&CSS</Link>
+              </li>
+              <li>
+                <Link to="/JavaScript">JavaScript</Link>
+              </li>
+              <li>
+                <Link to="/React">React</Link>
+              </li>
+            </ul>
+          </div>
+          <ContentOptions
+            contentChoose={props.contentChoose}
+            focusedStyle={props.focusedStyle}
+          />
+        </section>
+      ) : 
+          <Route
+            render={({ history }) => (
+              <SearchBar
+                value={props.searchValue}
+                onSearch={props.onSearch}
+                onSubmit={e => {
+                  history.push(`/?search=${props.searchValue}`);
+                  e.preventDefault();
+                }}
+              />
+            )}
+          />
+      }
       <div className="resource-content">
         {props.resourceKinds.videos.length ? (
           <VideoKind

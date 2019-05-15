@@ -5,9 +5,8 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 export default function TechOptions(props) {
   return (
-    <Router>
       <div id="tech-kind">
-        <ul style={{ top: `${props.menuSlideDown}px` }}>
+        <ul>
           <li>
             <Link to="/Html&CSS">Html&CSS</Link>
           </li>
@@ -19,7 +18,5 @@ export default function TechOptions(props) {
           </li>
         </ul>
       </div>
-      {/* <Route path="/:name?" component={Header} /> */}
-    </Router>
   );
 }

@@ -195,7 +195,7 @@ header #smallest-screen #tech-kind ul li {
 /* Resource contents style */
 main {
   position: relative;
-  top: 40px;
+  top: 80px;
 }
 
 main .resource-content {

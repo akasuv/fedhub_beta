@@ -36,15 +36,6 @@ export default class Header extends React.Component {
     });
   };
 
-  // backToHome = () => {
-  //   window.innerWidth < 600
-  //     ? this.dataLoad("HomePage", this.state.sourceData, "videos")
-  //     : this.dataLoad("HomePage", this.state.sourceData);
-
-  //   this.focusedStyleChange({ target: { value: "videos" } });
-  //   this.resetKeepers("HomePage");
-  // };
-
   rotateMenuIcon = () => {
     MenuIconClickCount++;
     var degChange = 0;
@@ -83,41 +74,34 @@ export default class Header extends React.Component {
             style={{ transform: `rotate(${this.state.rotateDeg}deg)` }}
             onClick={this.rotateMenuIcon}
           />
-          {window.innerWidth < 600 ? <div id="smallest-screen" style={{ top: `${this.state.menuMove}px` }}>
-            <div id="tech-kind">
-              <ul style={{ top: `${this.state.menuSlideDown}px` }}>
-                <li>
-                  <Link to="/Html&CSS">Html&CSS</Link>
-                </li>
-                <li>
-                  <Link to="/JavaScript">JavaScript</Link>
-                </li>
-                <li>
-                  <Link to="/React">React</Link>
-                </li>
-              </ul>
+          {window.innerWidth < 600 ? (
+            <div
+              id="smallest-screen"
+              style={{ top: `${this.state.menuMove}px` }}
+            >
+              <div id="tech-kind">
+                <ul style={{ top: `${this.state.menuSlideDown}px` }}>
+                  <li>
+                    <Link to="/Html&CSS">Html&CSS</Link>
+                  </li>
+                  <li>
+                    <Link to="/JavaScript">JavaScript</Link>
+                  </li>
+                  <li>
+                    <Link to="/React">React</Link>
+                  </li>
+                </ul>
+              </div>
             </div>
-          </div>
-          : <div id="tech-kind">
-            <ul style={{ top: `${this.state.menuSlideDown}px` }}>
-              <li>
-                <Link to="/Html&CSS">Html&CSS</Link>
-              </li>
-              <li>
-                <Link to="/JavaScript">JavaScript</Link>
-              </li>
-              <li>
-                <Link to="/React">React</Link>
-              </li>
-            </ul>
-          </div>
-          }
+          ) : (
+            <TechOptions />
+          )}
           <Route
             render={({ history }) => (
               <SearchBar
                 value={this.state.searchValue}
                 onSearch={this.onSearch}
-                onSubmit={ e => {
+                onSubmit={e => {
                   history.push(`/?search=${this.state.searchValue}`);
                   e.preventDefault();
                   console.log(`history type: ${typeof history}`);
