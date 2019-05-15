@@ -8,13 +8,13 @@ export default function TechOptions(props) {
       <div id="tech-kind">
         <ul>
           <li>
-            <Link to="/Html&CSS">Html&CSS</Link>
+            <Link to="/fedhub_beta/Html&CSS">Html&CSS</Link>
           </li>
           <li>
-            <Link to="/JavaScript">JavaScript</Link>
+            <Link to="/fedhub_beta/JavaScript">JavaScript</Link>
           </li>
           <li>
-            <Link to="/React">React</Link>
+            <Link to="/fedhub_beta/React">React</Link>
           </li>
         </ul>
       </div>

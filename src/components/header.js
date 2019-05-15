@@ -65,7 +65,7 @@ export default class Header extends React.Component {
       <Router>
         <header onMouseLeave={this.mouseLeave} style={this.state.headStyle}>
           <h1>
-            <Link to="/">FEDHUB</Link>
+            <Link to="/fedhub_beta/">FEDHUB</Link>
           </h1>
           <img
             id="smallest-screen-menu"
@@ -82,13 +82,13 @@ export default class Header extends React.Component {
               <div id="tech-kind">
                 <ul style={{ top: `${this.state.menuSlideDown}px` }}>
                   <li>
-                    <Link to="/Html&CSS">Html&CSS</Link>
+                    <Link to="/fedhub_beta/Html&CSS">Html&CSS</Link>
                   </li>
                   <li>
-                    <Link to="/JavaScript">JavaScript</Link>
+                    <Link to="/fedhub_beta/JavaScript">JavaScript</Link>
                   </li>
                   <li>
-                    <Link to="/React">React</Link>
+                    <Link to="/fedhub_beta/React">React</Link>
                   </li>
                 </ul>
               </div>
@@ -102,7 +102,7 @@ export default class Header extends React.Component {
                 value={this.state.searchValue}
                 onSearch={this.onSearch}
                 onSubmit={e => {
-                  history.push(`/?search=${this.state.searchValue}`);
+                  history.push(`/fedhub_beta/?search=${this.state.searchValue}`);
                   e.preventDefault();
                   console.log(`history type: ${typeof history}`);
                 }}
