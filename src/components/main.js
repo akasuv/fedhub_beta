@@ -8,7 +8,9 @@ import VideoKind from "./videoKind";
 import ArticleKind from "./articleKind";
 import BookKind from "./bookKind";
 import SearchBar from "./searchBar";
+import ContentOptions from "./contentOptions";
 
+var resizeCount = 0;
 class Main extends React.Component {
   constructor() {
     super();
@@ -21,6 +23,11 @@ class Main extends React.Component {
       },
       sourceData: null,
       searchValue: "",
+      focusedStyle: {
+        videos: { border: "3px solid black" },
+        articles: {},
+        books: {}
+      },
     };
   }
 
@@ -43,16 +50,19 @@ class Main extends React.Component {
       }
     }
 
-    this.setState({ resourceData, topicKeeper: this.props.match.params.name });
+    this.setState({ resourceData });
   }
 
   onSearch = e => {
     this.setState({ searchValue: e.target.value });
   };
 
-  searchSubmit = e => {
-    const data = {...this.state.sourceData};
-    const search = this.state.searchValue;
+  searchSubmit = (searchParam, fireData) => {
+    console.log("searching....")
+    console.log(searchParam)
+    console.log(fireData)
+    const data = {...fireData};
+    const search = searchParam;
     const searchResult = {
       videos: [],
       articles: [],
@@ -60,7 +70,7 @@ class Main extends React.Component {
     };
     
     delete data.HomePage;
-
+    
     for (let topicKey in data) {
       for (let searchKey in searchResult) {
         for (let dataKey in data[topicKey][searchKey]) {
@@ -75,13 +85,13 @@ class Main extends React.Component {
       }
     }
     
-    this.state.searchValue && this.setState(
+    this.setState(
       {
         resourceData: searchResult,
-        keepSearchData: searchResult,        
+        keepSearchData: searchResult,
       }
     );
-    e.preventDefault();
+    // e.preventDefault();
   };
 
   keepSearchRes = (type=null) => {
@@ -98,27 +108,80 @@ class Main extends React.Component {
     this.setState({resourceData});
   }
 
+  contentChoose = e => {
+    
+    !this.state.keepSearchData
+      ?this.dataLoad(this.state.topicKeeper, this.state.sourceData, e.target.value)
+      :this.keepSearchRes(e.target.value);
+
+    this.focusedStyleChange(e);
+  };
+  focusedStyleChange = e => {
+    const focusedStyle = {
+      videos: {},
+      articles: {},
+      books: {},
+    }
+
+    for(let key in focusedStyle) {
+      if (key === e.target.value ) {
+        focusedStyle[key] = { border: "3px solid black" }
+      }
+    }
+
+    this.setState({focusedStyle})
+  }
+
   componentDidMount() {
     let topic = this.props.match.params.name || "HomePage";
     // connect to firebase database
     const rootRef = firebase.database().ref();
     rootRef.on("value", snap => {
       const data = snap.toJSON();
-
-      // window.innerWidth > 600
-      this.dataLoad(topic, data);
-      //   : this.dataLoad(this.state.topicKeeper, data, "videos");
+      window.innerWidth > 600 
+      ? this.dataLoad(topic, data)
+      : this.dataLoad(topic, data, "videos");
       this.setState({ sourceData: data, topicKeeper: topic });
 
       window.addEventListener("click", this.click.bind(this));
+      window.addEventListener("submit", this.submit.bind(this));
+      window.addEventListener("resize", this.resize.bind(this));
     });
+  }
+
+  submit = () => {
+    let params = new URLSearchParams(this.props.location.search);
+    let search = params.get("search");
+    search && this.searchSubmit(search, this.state.sourceData);
   }
 
   click = () => {
     let topic = this.props.match.params.name || "HomePage";
     this.state.topicKeeper !== topic &&
       this.dataLoad(topic, this.state.sourceData);
+      this.setState({topicKeeper: topic});
   };
+
+  resize = () => {
+    // console.log(this.state.topicKeeper);
+    if (window.innerWidth > 599) {
+      !this.state.keepSearchData
+        ?this.dataLoad(this.state.topicKeeper, this.state.sourceData)
+        :this.setState({resourceData: this.state.keepSearchData});
+      resizeCount = 0;
+    } else 
+    { 
+      if(resizeCount < 1) { 
+        !this.state.keepSearchData
+          ?this.dataLoad(this.state.topicKeeper, this.state.sourceData, "videos")
+          :this.keepSearchRes("videos");
+        
+        this.focusedStyleChange({target: {value: "videos"}});
+      }
+
+      resizeCount++; 
+    }
+  }
 
   render() {
     return this.state.sourceData ? (
@@ -127,6 +190,10 @@ class Main extends React.Component {
           value={this.state.searchValue}
           onSearch={this.onSearch}
           onSubmit={this.searchSubmit}
+        />
+        <ContentOptions 
+          contentChoose={this.contentChoose} 
+          focusedStyle={this.state.focusedStyle} 
         />
         <div className="resource-content">
           <VideoKind
@@ -144,7 +211,7 @@ class Main extends React.Component {
         </div>
       </main>
     ) : (
-      <div>Loading...</div>
+      <div style={{width: "800px", height: "500px", backgroundColor: "blue"}}>Loading...</div>
     );
   }
 }

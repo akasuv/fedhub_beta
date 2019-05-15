@@ -1,32 +1,25 @@
 import React from "react";
 import Button from "./theButton";
+import Header from "./header";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 export default function TechOptions(props) {
   return (
-    <div id="tech-kind">
-      <ul style={{ top: `${props.menuSlideDown}px` }}>
-        <li>
-          <Button
-            onClick={props.topicChoose}
-            value="Html&CSS"
-            children="HTML&CSS"
-          />
-        </li>
-        <li>
-          <Button
-            onClick={props.topicChoose}
-            value="JavaScript"
-            children="JavaScript"
-          />
-        </li>
-        <li>
-          <Button 
-            onClick={props.topicChoose} 
-            value="React" 
-            children="React" 
-          />
-        </li>
-      </ul>
-    </div>
+    <Router>
+      <div id="tech-kind">
+        <ul style={{ top: `${props.menuSlideDown}px` }}>
+          <li>
+            <Link to="/Html&CSS">Html&CSS</Link>
+          </li>
+          <li>
+            <Link to="/JavaScript">JavaScript</Link>
+          </li>
+          <li>
+            <Link to="/React">React</Link>
+          </li>
+        </ul>
+      </div>
+      {/* <Route path="/:name?" component={Header} /> */}
+    </Router>
   );
 }

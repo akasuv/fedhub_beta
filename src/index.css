@@ -55,7 +55,12 @@ header {
 header h1 {
   margin-left: 10px;
 }
+header a {
 
+  color: black;
+  text-decoration: none;
+
+}
 /* SearchBar component style */
 header .search-bar {
   border: 3px solid black;
@@ -111,7 +116,7 @@ header .search-bar form input:focus {
   margin: 0 10px;
 }
 
-#tech-kind ul li button {
+#tech-kind ul li {
   font-size: 18px;
   position: relative;
   outline: none;
@@ -120,7 +125,7 @@ header .search-bar form input:focus {
   background-color: white;
 }
 
-#tech-kind ul li button::before {
+#tech-kind ul li::before {
   content: "";
   width: 80%;
   height: 2px;
@@ -132,7 +137,7 @@ header .search-bar form input:focus {
   background-color: black;
 }
 
-#tech-kind ul li button:hover::before {
+#tech-kind ul li:hover::before {
   transform: scaleX(1);
 }
 
@@ -190,7 +195,7 @@ header #smallest-screen #tech-kind ul li {
 /* Resource contents style */
 main {
   position: relative;
-  top: 0px;
+  top: 40px;
 }
 
 main .resource-content {
@@ -464,7 +469,7 @@ main #content-options {
   width: 80%;
   position: absolute;
   left: 10%;
-  top: 110px;
+  top: 100px;
   display: flex;
   justify-content: space-evenly;
   list-style-type: none;
