@@ -116,7 +116,7 @@ header .search-bar form input:focus {
   margin: 0 10px;
 }
 
-#tech-kind ul li {
+#tech-kind ul li a{
   font-size: 18px;
   position: relative;
   outline: none;
@@ -125,7 +125,7 @@ header .search-bar form input:focus {
   background-color: white;
 }
 
-#tech-kind ul li::before {
+#tech-kind ul li a::before {
   content: "";
   width: 80%;
   height: 2px;
@@ -137,7 +137,7 @@ header .search-bar form input:focus {
   background-color: black;
 }
 
-#tech-kind ul li:hover::before {
+#tech-kind ul li a:hover::before {
   transform: scaleX(1);
 }
 
@@ -195,10 +195,11 @@ header #smallest-screen #tech-kind ul li {
 /* Resource contents style */
 main {
   position: relative;
-  top: 80px;
+  top: 40px;
 }
 
 main .resource-content {
+  position: relative;
   padding-bottom: 10px;
   border: 0px solid green;
 }
@@ -520,6 +521,7 @@ main #content-options li button {
   }
   main #content-options {
     visibility: visible;
+    z-index: 999;
   }
 
   main .resource-content .content-kind {
@@ -591,12 +593,12 @@ main #content-options li button {
   }
 
   main {
-    top: 40px;
+    top: 80px;
     border: 0px solid red;
   }
 
   main .resource-content .content-kind {
-    top: 20px;
+    top: 0px;
   }
 
   main .resource-content .content-kind .content {
@@ -622,16 +624,23 @@ main #content-options li button {
   }
 
   main .search-bar {
+    width: 80%;
+    margin: auto;
     position: relative;
-    top: 40px;
     visibility: visible;
   }
 
+  main #tech-kind {
+    visibility: visible;
+  }
 }
 
 @media (min-width: 680px) and (max-width: 799px) {
 
   main .search-bar {
+    width: 80%;
+    margin: auto;
+    position: relative;
     visibility: visible;
   }
 
@@ -709,10 +718,6 @@ main #content-options li button {
     visibility: hidden;
   }
 
-  main {
-    top: 40px;
-  }
-
   main .search-bar {
     width: 50%;
     margin: auto;
@@ -720,7 +725,10 @@ main #content-options li button {
     top: 40px;
     visibility: visible;
   }
+  main .resource-content {
+    top: 40px;
 
+  }
   main .resource-content .content-kind .content {
     grid-template-columns: repeat(3, 1fr);
   }

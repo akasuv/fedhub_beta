@@ -7,7 +7,7 @@ import TechOptions from "./techOptions";
 
 var MenuIconClickCount = 0;
 
-export default class Header extends React.Component {
+class App extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -18,15 +18,21 @@ export default class Header extends React.Component {
       searchValue: ""
     };
   }
-
+  
   mouseLeave = () => {
     MenuIconClickCount % 2 !== 0 && MenuIconClickCount++;
-    var degChange = 0;
-    var slide = 0;
-    var move = 0;
-    MenuIconClickCount % 2 !== 0 ? (slide = -5) : (slide = -200);
-    MenuIconClickCount % 2 === 0 ? (degChange = 0) : (degChange = -90);
-    MenuIconClickCount % 2 !== 0 ? (move = 60) : (move = -999);
+    let degChange = 0;
+    let slide = 0;
+    let move = 0;
+    if (MenuIconClickCount % 2 !== 0){
+      slide = -5;
+      move = 60;
+      degChange = -90;
+    } else {
+      slide = -200;
+      move = -999;
+      degChange = 0;
+    }
 
     this.setState({
       menuClick: false,
@@ -38,13 +44,19 @@ export default class Header extends React.Component {
 
   rotateMenuIcon = () => {
     MenuIconClickCount++;
-    var degChange = 0;
-    var slide = 0;
-    var move = 0;
+    let degChange = 0;
+    let slide = 0;
+    let move = 0;
 
-    MenuIconClickCount % 2 !== 0 ? (degChange = 90) : (degChange = -90);
-    MenuIconClickCount % 2 !== 0 ? (slide = -85) : (slide = -200);
-    MenuIconClickCount % 2 !== 0 ? (move = 60) : (move = -999);
+    if (MenuIconClickCount % 2 !== 0){
+      slide = -85;
+      move = 60;
+      degChange = 90;
+    } else {
+      slide = -200;
+      move = -999;
+      degChange = -90;
+    }
 
     this.setState(preState => {
       return {
@@ -65,16 +77,21 @@ export default class Header extends React.Component {
       <Router>
         <header onMouseLeave={this.mouseLeave} style={this.state.headStyle}>
           <h1>
-            <Link to="/fedhub_beta/">FEDHUB</Link>
+            <Link to="/">FedHub</Link>
           </h1>
-          <img
-            id="smallest-screen-menu"
-            alt="menu"
-            src={menu}
-            style={{ transform: `rotate(${this.state.rotateDeg}deg)` }}
-            onClick={this.rotateMenuIcon}
-          />
-          {window.innerWidth < 600 ? (
+          {
+            window.innerWidth < 600 && (
+              <img
+                id="smallest-screen-menu"
+                alt="menu"
+                src={menu}
+                style={{ transform: `rotate(${this.state.rotateDeg}deg)` }}
+                onClick={this.rotateMenuIcon}
+              />
+            )
+          }
+          {
+            window.innerWidth < 600 ? (
             <div
               id="smallest-screen"
               style={{ top: `${this.state.menuMove}px` }}
@@ -82,13 +99,13 @@ export default class Header extends React.Component {
               <div id="tech-kind">
                 <ul style={{ top: `${this.state.menuSlideDown}px` }}>
                   <li>
-                    <Link to="/fedhub_beta/Html&CSS">Html&CSS</Link>
+                    <Link to="/Html&CSS">Html&CSS</Link>
                   </li>
                   <li>
-                    <Link to="/fedhub_beta/JavaScript">JavaScript</Link>
+                    <Link to="/JavaScript">JavaScript</Link>
                   </li>
                   <li>
-                    <Link to="/fedhub_beta/React">React</Link>
+                    <Link to="/React">React</Link>
                   </li>
                 </ul>
               </div>
@@ -102,9 +119,10 @@ export default class Header extends React.Component {
                 value={this.state.searchValue}
                 onSearch={this.onSearch}
                 onSubmit={e => {
-                  history.push(`/fedhub_beta/?search=${this.state.searchValue}`);
+                  this.state.searchValue 
+                    && history.push(`/?search=${this.state.searchValue}`);
+
                   e.preventDefault();
-                  console.log(`history type: ${typeof history}`);
                 }}
               />
             )}
@@ -115,3 +133,5 @@ export default class Header extends React.Component {
     );
   }
 }
+
+export default App;

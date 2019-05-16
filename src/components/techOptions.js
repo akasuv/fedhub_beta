@@ -1,6 +1,4 @@
 import React from "react";
-import Button from "./theButton";
-import Header from "./header";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 export default function TechOptions(props) {
@@ -8,13 +6,13 @@ export default function TechOptions(props) {
       <div id="tech-kind">
         <ul>
           <li>
-            <Link to="/fedhub_beta/Html&CSS">Html&CSS</Link>
+            <Link to="/Html&CSS">Html&CSS</Link>
           </li>
           <li>
-            <Link to="/fedhub_beta/JavaScript">JavaScript</Link>
+            <Link to="/JavaScript">JavaScript</Link>
           </li>
           <li>
-            <Link to="/fedhub_beta/React">React</Link>
+            <Link to="/React">React</Link>
           </li>
         </ul>
       </div>

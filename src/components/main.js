@@ -1,14 +1,7 @@
-import React, { Component } from "react";
+import React from "react";
 // import ResourceKinds from "./components/resourceKinds";
 import * as firebase from "firebase";
 import loading from "../icons/loading.gif";
-import ReactGA from "react-ga";
-import { deflate } from "zlib";
-import VideoKind from "./videoKind";
-import ArticleKind from "./articleKind";
-import BookKind from "./bookKind";
-import SearchBar from "./searchBar";
-import ContentOptions from "./contentOptions";
 import ResourceKinds from "./resourceKinds";
 
 var resizeCount = 0;
@@ -29,6 +22,11 @@ class Main extends React.Component {
         articles: {},
         books: {}
       },
+      focusedStyleDefault: {
+        target: {
+          value: "videos"
+        }
+      }
     };
   }
 
@@ -52,6 +50,7 @@ class Main extends React.Component {
     }
 
     this.setState({ resourceData });
+    this.setState({});
   }
 
   onSearch = e => {
@@ -59,19 +58,19 @@ class Main extends React.Component {
   };
 
   searchSubmit = (searchParam, fireData) => {
-    console.log("searching....")
-    console.log(searchParam)
-    console.log(fireData)
-    const data = {...fireData};
+    console.log("searching....");
+    console.log(searchParam);
+    console.log(fireData);
+    const data = { ...fireData };
     const search = searchParam;
     const searchResult = {
       videos: [],
       articles: [],
-      books: [],
+      books: []
     };
-    
+
     delete data.HomePage;
-    
+
     for (let topicKey in data) {
       for (let searchKey in searchResult) {
         for (let dataKey in data[topicKey][searchKey]) {
@@ -85,108 +84,124 @@ class Main extends React.Component {
         }
       }
     }
-    
-    this.setState(
-      {
-        resourceData: searchResult,
-        keepSearchData: searchResult,
-      }
-    );
-    // e.preventDefault();
+
+    this.setState({
+      resourceData: searchResult,
+      keepSearchData: searchResult
+    });
   };
 
-  keepSearchRes = (type=null) => {
+  keepSearchRes = (type = null) => {
     const resourceData = {
       videos: [],
       articles: [],
       books: []
-    }
-    
+    };
+
     this.state.keepSearchData[type].map(item => {
-      resourceData[type].push(item);    
+      resourceData[type].push(item);
     });
 
-    this.setState({resourceData});
-  }
+    this.setState({ resourceData });
+  };
 
   contentChoose = e => {
-    
     !this.state.keepSearchData
-      ?this.dataLoad(this.state.topicKeeper, this.state.sourceData, e.target.value)
-      :this.keepSearchRes(e.target.value);
+      ? this.dataLoad(
+          this.state.topicKeeper,
+          this.state.sourceData,
+          e.target.value
+        )
+      : this.keepSearchRes(e.target.value);
 
     this.focusedStyleChange(e);
   };
-  focusedStyleChange = e => {
+
+  focusedStyleChange = (e = this.state.focusedStyleDefault) => {
     const focusedStyle = {
       videos: {},
       articles: {},
-      books: {},
-    }
+      books: {}
+    };
 
-    for(let key in focusedStyle) {
-      if (key === e.target.value ) {
-        focusedStyle[key] = { border: "3px solid black" }
+    for (let key in focusedStyle) {
+      if (key === e.target.value) {
+        focusedStyle[key] = { border: "3px solid black" };
       }
     }
 
-    this.setState({focusedStyle})
-  }
+    this.setState({ focusedStyle });
+  };
 
   componentDidMount() {
     let topic = this.props.match.params.name || "HomePage";
     // connect to firebase database
     const rootRef = firebase.database().ref();
+    
     rootRef.on("value", snap => {
       const data = snap.toJSON();
-      window.innerWidth > 600 
-      ? this.dataLoad(topic, data)
-      : this.dataLoad(topic, data, "videos");
+
+      window.innerWidth > 600
+        ? this.dataLoad(topic, data)
+        : this.dataLoad(topic, data, "videos");
+
       this.setState({ sourceData: data, topicKeeper: topic });
 
       window.addEventListener("click", this.click.bind(this));
       window.addEventListener("submit", this.submit.bind(this));
       window.addEventListener("resize", this.resize.bind(this));
-    });
+      }
+    );
   }
 
   submit = () => {
     let params = new URLSearchParams(this.props.location.search);
     let search = params.get("search");
+
     search && this.searchSubmit(search, this.state.sourceData);
-  }
+    this.setState({ topicKeeper: "" });
+  };
 
   click = () => {
     let topic = this.props.match.params.name || "HomePage";
-    this.state.topicKeeper !== topic &&
-      this.dataLoad(topic, this.state.sourceData);
-      this.setState({topicKeeper: topic});
+
+    if (topic !== this.state.topicKeeper) {
+      if (window.innerWidth < 600) {
+        this.dataLoad(topic, this.state.sourceData, "videos");
+        this.focusedStyleChange();
+      } else {
+        this.dataLoad(topic, this.state.sourceData);
+      }
+    }
+
+    this.setState({ topicKeeper: topic, searchValue: "", keepSearchData: "" });
   };
 
   resize = () => {
-    // console.log(this.state.topicKeeper);
     if (window.innerWidth > 599) {
       !this.state.keepSearchData
-        ?this.dataLoad(this.state.topicKeeper, this.state.sourceData)
-        :this.setState({resourceData: this.state.keepSearchData});
+        ? this.dataLoad(this.state.topicKeeper, this.state.sourceData)
+        : this.setState({ resourceData: this.state.keepSearchData });
+      
       resizeCount = 0;
-    } else 
-    { 
-      if(resizeCount < 1) { 
+    } else {
+      if (resizeCount < 1) {
         !this.state.keepSearchData
-          ?this.dataLoad(this.state.topicKeeper, this.state.sourceData, "videos")
-          :this.keepSearchRes("videos");
-        
-        this.focusedStyleChange({target: {value: "videos"}});
-      }
+          ? this.dataLoad(
+              this.state.topicKeeper,
+              this.state.sourceData,
+              "videos"
+            )
+          : this.keepSearchRes("videos");
 
-      resizeCount++; 
+        this.focusedStyleChange({ target: { value: "videos" } });
+      }
+      resizeCount++;
     }
-  }
+  };
 
   render() {
     return this.state.sourceData ? (
-      
       <ResourceKinds
         resourceKinds={this.state.resourceData}
         searchValue={this.state.searchValue}
@@ -196,11 +211,10 @@ class Main extends React.Component {
         contentChoose={this.contentChoose}
         focusedStyle={this.state.focusedStyle}
       />
-      
     ) : (
       <div id="loading">
-      <img src={loading} alt="loading"></img>
-    </div>
+        <img src={loading} alt="loading" />
+      </div>
     );
   }
 }

@@ -1,5 +1,4 @@
 import React from "react";
-
 import VideoKind from "./videoKind";
 import BookKind from "./bookKind";
 import ArticleKind from "./articleKind";
@@ -11,52 +10,25 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 export default function ResourceKinds(props) {
   return (
     <main>
-      {window.innerWidth < 600 ? (
-        <section>
-          <Route
-            render={({ history }) => (
-              <SearchBar
-                value={props.searchValue}
-                onSearch={props.onSearch}
-                onSubmit={e => {
-                  history.push(`/?search=${props.searchValue}`);
-                  e.preventDefault();
-                }}
-              />
-            )}
+      <Route
+        render={({ history }) => (
+          <SearchBar
+            value={props.searchValue}
+            onSearch={props.onSearch}
+            onSubmit={e => {
+              props.searchValue && history.push(`/?search=${props.searchValue}`);
+              e.preventDefault();
+            }}
           />
-          <div id="tech-kind">
-            <ul>
-              <li>
-                <Link to="/Html&CSS">Html&CSS</Link>
-              </li>
-              <li>
-                <Link to="/JavaScript">JavaScript</Link>
-              </li>
-              <li>
-                <Link to="/React">React</Link>
-              </li>
-            </ul>
-          </div>
-          <ContentOptions
-            contentChoose={props.contentChoose}
-            focusedStyle={props.focusedStyle}
-          />
-        </section>
-      ) : 
-          <Route
-            render={({ history }) => (
-              <SearchBar
-                value={props.searchValue}
-                onSearch={props.onSearch}
-                onSubmit={e => {
-                  history.push(`/?search=${props.searchValue}`);
-                  e.preventDefault();
-                }}
-              />
-            )}
-          />
-      }
+        )}
+      />
+      {window.innerWidth < 600 && (
+        <ContentOptions
+          contentChoose={props.contentChoose}
+          focusedStyle={props.focusedStyle}
+        />
+      )}
+      {window.innerWidth < 800 && <TechOptions />}
       <div className="resource-content">
         {props.resourceKinds.videos.length ? (
           <VideoKind
